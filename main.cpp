@@ -37,6 +37,30 @@ int     main()
     std::cout << "stack    :: size :: " << stack1->size() << " " << stack2->size() << std::endl;
     std::cout << "ft_stack :: size :: " << ft_stack1->size() << " " << ft_stack2->size() << std::endl;
 
+    std::cout << "######## == ########" << std::endl;
+    std::cout << "stack    :: ==   :: " << (stack1 == stack2) << std::endl;
+    std::cout << "ft_stack :: ==   :: " << (ft_stack1 == ft_stack2) << std::endl;
+
+    std::cout << "######## != ########" << std::endl;
+    std::cout << "stack    :: !=   :: " << (stack1 != stack2) << std::endl;
+    std::cout << "ft_stack :: !=   :: " << (ft_stack1 != ft_stack2) << std::endl;
+
+    std::cout << "######## < ########" << std::endl;
+    std::cout << "stack    :: <    :: " << (stack1 < stack2) << std::endl;
+    std::cout << "ft_stack :: <    :: " << (ft_stack1 < ft_stack2) << std::endl;
+
+    std::cout << "######## > ########" << std::endl;
+    std::cout << "stack    :: >    :: " << (stack1 > stack2) << std::endl;
+    std::cout << "ft_stack :: >    :: " << (ft_stack1 > ft_stack2) << std::endl;
+
+    std::cout << "######## < ########" << std::endl;
+    std::cout << "stack    :: <=   :: " << (stack1 <= stack2) << std::endl;
+    std::cout << "ft_stack :: <=   :: " << (ft_stack1 <= ft_stack2) << std::endl;
+
+    std::cout << "######## > ########" << std::endl;
+    std::cout << "stack    :: >=   :: " << (stack1 >= stack2) << std::endl;
+    std::cout << "ft_stack :: >=   :: " << (ft_stack1 >= ft_stack2) << std::endl;
+
     std::cout << "######## TOP ########" << std::endl;
     std::cout << "stack    :: top  :: " << stack1->top() << " " << stack2->top() << std::endl;
     std::cout << "ft_stack :: top  :: " << ft_stack1->top() << " " << ft_stack2->top() << std::endl;
@@ -70,6 +94,14 @@ int     main()
     std::cout << "######## > ########" << std::endl;
     std::cout << "stack    :: >    :: " << (stack1 > stack2) << std::endl;
     std::cout << "ft_stack :: >    :: " << (ft_stack1 > ft_stack2) << std::endl;
+
+    std::cout << "######## < ########" << std::endl;
+    std::cout << "stack    :: <=   :: " << (stack1 <= stack2) << std::endl;
+    std::cout << "ft_stack :: <=   :: " << (ft_stack1 <= ft_stack2) << std::endl;
+
+    std::cout << "######## > ########" << std::endl;
+    std::cout << "stack    :: >=   :: " << (stack1 >= stack2) << std::endl;
+    std::cout << "ft_stack :: >=   :: " << (ft_stack1 >= ft_stack2) << std::endl;
 
     delete(ft_stack1);
 }
