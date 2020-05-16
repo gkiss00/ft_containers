@@ -191,7 +191,7 @@ void ft_stack<T>::pop()
 //****************************************
 
 template<class T>
-bool operator==(const ft_stack<T> &me, const ft_stack<T> &target)
+bool operator==(ft_stack<T> &me, ft_stack<T> &target)
 {
     unsigned int size;
     ft_node<T> *node1;
@@ -204,11 +204,50 @@ bool operator==(const ft_stack<T> &me, const ft_stack<T> &target)
         return (false);
     for(unsigned int i = 0; i < size; ++i)
     {
-        if (node1->getElement() != node2->getElement)
+        if (node1->getElement() != node2->getElement())
             return (false);
         node1 = node1->getNext();
         node2 = node2->getNext();
     }
+    return (true);
+}
+
+template<class T>
+bool operator!=(ft_stack<T> &me, ft_stack<T> &target)
+{
+    unsigned int size_min;
+    unsigned int size_me;
+    unsigned int size_target;
+    ft_stack<T> *me_bis = new Stack();
+    ft_stack<T> *target_bis = new Stack();
+    
+
+    size_me = me.size();
+    size_target = target.size();
+    size_min = me.size() > target.size() ? (me.size()) : (target.size());
+}
+
+template<class T>
+bool operator<(ft_stack<T> &me, ft_stack<T> &target)
+{
+    return (true);
+}
+
+template<class T>
+bool operator<=(ft_stack<T> &me, ft_stack<T> &target)
+{
+    return (true);
+}
+
+template<class T>
+bool operator>(ft_stack<T> &me, ft_stack<T> &target)
+{
+    return (true);
+}
+
+template<class T>
+bool operator>=(ft_stack<T> &me, ft_stack<T> &target)
+{
     return (true);
 }
 
