@@ -1,47 +1,48 @@
 #include <iostream>
 #include <string>
-#include <stack>
+#include <queue>
+#include <queue>
 
 int main()
 {
-    std::stack<int> *stack1 = new std::stack<int>();
-    std::stack<int> *stack2 = new std::stack<int>();
+    std::queue<int> *queue1 = new std::queue<int>();
+    std::queue<int> *queue2 = new std::queue<int>();
 
-    std::cout << "stack    :: ==    :: " << (*stack1 == *stack2) << std::endl;
-    std::cout << "stack    :: !=    :: " << (*stack1 != *stack2) << std::endl;
-    std::cout << "stack    :: <    :: " << (*stack1 < *stack2) << std::endl;
-    std::cout << "stack    :: >    :: " << (*stack1 > *stack2) << std::endl;
+    std::cout << "queue    :: ==    :: " << (*queue1 == *queue2) << std::endl;
+    std::cout << "queue    :: !=    :: " << (*queue1 != *queue2) << std::endl;
+    std::cout << "queue    :: <    :: " << (*queue1 < *queue2) << std::endl;
+    std::cout << "queue    :: >    :: " << (*queue1 > *queue2) << std::endl;
     std::cout << std::endl;
     
-    stack1->push(1);
-    stack1->push(2);
-    stack1->push(3);
+    queue1->push(0);
+    queue1->push(2);
+    queue1->push(5);
 
-    stack2->push(1);
-    stack2->push(2);
-    stack2->push(3);
+    queue2->push(1);
+    queue2->push(2);
+    queue2->push(3);
 
 
-    std::cout << "stack    :: ==    :: " << (*stack1 == *stack2) << std::endl;
-    std::cout << "stack    :: !=    :: " << (*stack1 != *stack2) << std::endl;
-    std::cout << "stack    :: <    :: " << (*stack1 < *stack2) << std::endl;
-    std::cout << "stack    :: >    :: " << (*stack1 > *stack2) << std::endl;
+    std::cout << "queue    :: ==    :: " << (*queue1 == *queue2) << std::endl;
+    std::cout << "queue    :: !=    :: " << (*queue1 != *queue2) << std::endl;
+    std::cout << "queue    :: <    :: " << (*queue1 < *queue2) << std::endl;
+    std::cout << "queue    :: >    :: " << (*queue1 > *queue2) << std::endl;
     std::cout << std::endl;
 
-    stack1->push(4);
+    queue1->push(4);
 
-    std::cout << "stack    :: ==    :: " << (*stack1 == *stack2) << std::endl;
-    std::cout << "stack    :: !=    :: " << (*stack1 != *stack2) << std::endl;
-    std::cout << "stack    :: <    :: " << (*stack1 < *stack2) << std::endl;
-    std::cout << "stack    :: >    :: " << (*stack1 > *stack2) << std::endl;
+    std::cout << "queue    :: ==    :: " << (*queue1 == *queue2) << std::endl;
+    std::cout << "queue    :: !=    :: " << (*queue1 != *queue2) << std::endl;
+    std::cout << "queue    :: <    :: " << (*queue1 < *queue2) << std::endl;
+    std::cout << "queue    :: >    :: " << (*queue1 > *queue2) << std::endl;
     std::cout << std::endl;
 
-    stack2->push(4);
-    stack2->push(5);
+    queue2->push(4);
+    queue2->push(5);
 
-    std::cout << "stack    :: ==    :: " << (*stack1 == *stack2) << std::endl;
-    std::cout << "stack    :: !=    :: " << (*stack1 != *stack2) << std::endl;
-    std::cout << "stack    :: <    :: " << (*stack1 < *stack2) << std::endl;
-    std::cout << "stack    :: >    :: " << (*stack1 > *stack2) << std::endl;
+    std::cout << "queue    :: ==    :: " << (*queue1 == *queue2) << std::endl;
+    std::cout << "queue    :: !=    :: " << (*queue1 != *queue2) << std::endl;
+    std::cout << "queue    :: <    :: " << (*queue1 < *queue2) << std::endl;
+    std::cout << "queue    :: >    :: " << (*queue1 > *queue2) << std::endl;
     return (0);
 }

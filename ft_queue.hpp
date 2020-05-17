@@ -1,5 +1,5 @@
-#ifndef FT_STACK
-#define FT_STACK
+#ifndef FT_QUEUE
+#define FT_QUEUE
 
 #include "ft_node.hpp"
 #include <stdio.h>
@@ -7,27 +7,28 @@
 
 
 template<class T>
-class ft_stack {
+class ft_queue {
     private:
         ft_node<T> *node;
     public:
-        ft_stack();
-        ft_stack(const ft_stack &target);
-        ft_stack &operator=(const ft_stack &target);
-        ~ft_stack();
+        ft_queue();
+        ft_queue(const ft_queue &target);
+        ft_queue &operator=(const ft_queue &target);
+        ~ft_queue();
 
         bool empty();
         unsigned int size();
-        T top();
+        T front();
+        T back();
         void push(T target);
         void pop();
 
-        friend bool operator==(ft_stack<T> &me, ft_stack<T> &target);
-        friend bool operator!=(ft_stack<T> &me, ft_stack<T> &target);
-        friend bool operator<(ft_stack<T> &me, ft_stack<T> &target);
-        friend bool operator<=(ft_stack<T> &me, ft_stack<T> &target);
-        friend bool operator>(ft_stack<T> &me, ft_stack<T> &target);
-        friend bool operator>=(ft_stack<T> &me, ft_stack<T> &target);
+        friend bool operator==(const ft_queue<T> &me, const ft_queue<T> &target);
+        friend bool operator!=(const ft_queue<T> &me, const ft_queue<T> &target);
+        friend bool operator<(const ft_queue<T> &me, const ft_queue<T> &target);
+        friend bool operator<=(const ft_queue<T> &me, const ft_queue<T> &target);
+        friend bool operator>(const ft_queue<T> &me, const ft_queue<T> &target);
+        friend bool operator>=(const ft_queue<T> &me, const ft_queue<T> &target);
 };
 
 //****************************************
@@ -37,19 +38,19 @@ class ft_stack {
 //****************************************
 
 template<class T>
-ft_stack<T>::ft_stack()
+ft_queue<T>::ft_queue()
 {
     this->node = NULL;
 }
 
 template<class T>
-ft_stack<T>::ft_stack(const ft_stack &target)
+ft_queue<T>::ft_queue(const ft_queue &target)
 {
     this->node = target.node;
 }
 
 template<class T>
-ft_stack<T> &ft_stack<T>::operator=(const ft_stack &target)
+ft_queue<T> &ft_queue<T>::operator=(const ft_queue &target)
 {
     ft_node<T> *tmp;
 
@@ -65,7 +66,7 @@ ft_stack<T> &ft_stack<T>::operator=(const ft_stack &target)
 }
 
 template<typename T>
-ft_stack<T>::~ft_stack()
+ft_queue<T>::~ft_queue()
 {
     ft_node<T> *tmp;
 
@@ -85,13 +86,13 @@ ft_stack<T>::~ft_stack()
 //****************************************
 
 template<class T>
-bool ft_stack<T>::empty()
+bool ft_queue<T>::empty()
 {
     return(this->node == NULL ? (true) : (false));
 }
 
 template<class T>
-unsigned int ft_stack<T>::size()
+unsigned int ft_queue<T>::size()
 {
     unsigned int i;
     ft_node<T> *tmp;
@@ -108,7 +109,15 @@ unsigned int ft_stack<T>::size()
 }
 
 template<class T>
-T ft_stack<T>::top()
+T ft_queue<T>::front()
+{
+    if (this->node != NULL)
+        return(this->node->getElement());
+    return (0);
+}
+
+template<class T>
+T ft_queue<T>::back()
 {
     ft_node<T> *tmp;
     ft_node<T> *ret;
@@ -122,11 +131,11 @@ T ft_stack<T>::top()
     this->node = tmp;
     if (ret != NULL)
         return (ret->getElement());
-    return (0);
+    return (0); 
 }
 
 template<class T>
-void ft_stack<T>::push(T target)
+void ft_queue<T>::push(T target)
 {
     ft_node<T> *tmp;
     ft_node<T> *nw;
@@ -145,30 +154,16 @@ void ft_stack<T>::push(T target)
 }
 
 template<class T>
-void ft_stack<T>::pop()
+void ft_queue<T>::pop()
 {
-    ft_node<T> *start;
-    ft_node<T> *precedent;
+    ft_node<T> *tmp;
 
-    start = this->node;
+    tmp = NULL;
     if (this->node != NULL)
     {
-        if (this->node->getNext() == NULL)
-        {
-            delete(this->node);
-            this->node = NULL;
-        }
-        else
-        {
-            while(this->node != NULL && this->node->getNext() != NULL)
-            {
-                precedent = this->node;
-                this->node = this->node->getNext();
-            }
-            delete(this->node);
-            precedent->setNext(NULL);
-            this->node = start;
-        }
+        tmp = this->node->getNext();
+        delete(this->node);
+        this->node = tmp;
     }
 }
 
@@ -179,7 +174,7 @@ void ft_stack<T>::pop()
 //****************************************
 
 template<class T>
-bool operator==(const ft_stack<T> &me, const ft_stack<T> &target)
+inline bool operator==(const ft_queue<T> &me, const ft_queue<T> &target)
 {
     unsigned int size;
     ft_node<T> *node1;
@@ -201,7 +196,7 @@ bool operator==(const ft_stack<T> &me, const ft_stack<T> &target)
 }
 
 template<class T>
-bool operator!=(const ft_stack<T> &me, const ft_stack<T> &target)
+inline bool operator!=(const ft_queue<T> &me, const ft_queue<T> &target)
 {
     unsigned int size;
     ft_node<T> *node1;
@@ -222,7 +217,7 @@ bool operator!=(const ft_stack<T> &me, const ft_stack<T> &target)
 }
 
 template<class T>
-bool operator<(const ft_stack<T> &me, const ft_stack<T> &target)
+inline bool operator<(const ft_queue<T> &me, const ft_queue<T> &target)
 {
     unsigned int size;
     ft_node<T> *node1;
@@ -244,13 +239,13 @@ bool operator<(const ft_stack<T> &me, const ft_stack<T> &target)
 }
 
 template<class T>
-bool operator<=(const ft_stack<T> &me, const ft_stack<T> &target)
+inline bool operator<=(const ft_queue<T> &me, const ft_queue<T> &target)
 {
     return (operator<(me, target) || operator==(me, target));
 }
 
 template<class T>
-bool operator>(const ft_stack<T> &me, const ft_stack<T> &target)
+inline bool operator>(const ft_queue<T> &me, const ft_queue<T> &target)
 {
     unsigned int size;
     ft_node<T> *node1;
@@ -272,7 +267,7 @@ bool operator>(const ft_stack<T> &me, const ft_stack<T> &target)
 }
 
 template<class T>
-bool operator>=(const ft_stack<T> &me, const ft_stack<T> &target)
+bool operator>=(const ft_queue<T> &me, const ft_queue<T> &target)
 {
     return (operator>(me, target) || operator==(me, target));
 }
