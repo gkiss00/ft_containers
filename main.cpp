@@ -109,7 +109,7 @@ int     main()
     std::cout << "stack    :: >=   :: " << (*stack1 >= *stack2) << std::endl;
     std::cout << "ft_stack :: >=   :: " << (*ft_stack1 >= *ft_stack2) << std::endl;
 
-
+    delete(ft_stack1);
 
     std::cout << "/*****************\\" << std::endl;
     std::cout << " QUEUE VS FT_QUEUE  " << std::endl;
@@ -225,75 +225,76 @@ int     main()
     std::cout << "stack    :: >=   :: " << (*queue1 >= *queue2) << std::endl;
     std::cout << "ft_stack :: >=   :: " << (*ft_queue1 >= *ft_queue2) << std::endl;
 
+    delete(ft_queue1);
 
     std::cout << "/*****************\\" << std::endl;
     std::cout << "   MAP VS FT_MAP    " << std::endl;
     std::cout << "\\*****************/" << std::endl;
 
-    std::map<char, std::string> map1;
-    std::map<char, std::string> map2;
-    std::map<char, std::string> map3;
-    ft_map<char, std::string> ft_map1;
-    ft_map<char, std::string> ft_map2;
-    ft_map<char, std::string> ft_map3;
+    std::map<char, std::string> *map1 = new std::map<char, std::string>();
+    std::map<char, std::string> *map2 = new std::map<char, std::string>();
+    std::map<char, std::string> *map3 = new std::map<char, std::string>();
+    ft_map<char, std::string> *ft_map1 = new ft_map<char, std::string>();
+    ft_map<char, std::string> *ft_map2 = new ft_map<char, std::string>();
+    ft_map<char, std::string> *ft_map3 = new ft_map<char, std::string>();
 
     std::cout << "######## [] ########" << std::endl;
-    map1['a'] = "je suis a";
-    ft_map1['a'] = "je suis a";
-    std::cout << "map      :: [a]  :: " << map1['a'] << std::endl;
-    std::cout << "ft_map   :: [a]  :: " << ft_map1['a'] << std::endl;
-    std::cout << "map      :: [b]  :: " << map1['b'] << std::endl;
-    std::cout << "ft_map   :: [b]  :: " << ft_map1['b'] << std::endl;
+    map1[0]['a'] = "je suis a";
+    ft_map1[0]['a'] = "je suis a";
+    std::cout << "map      :: [a]  :: " << map1[0]['a'] << std::endl;
+    std::cout << "ft_map   :: [a]  :: " << ft_map1[0]['a'] << std::endl;
+    std::cout << "map      :: [b]  :: " << map1[0]['b'] << std::endl;
+    std::cout << "ft_map   :: [b]  :: " << ft_map1[0]['b'] << std::endl;
 
     std::cout << "######## SIZE ########" << std::endl;
-    std::cout << "map      :: size :: " << map1.size() << std::endl;
-    std::cout << "ft_map   :: size :: " << ft_map1.size() << std::endl;
+    std::cout << "map      :: size :: " << map1->size() << std::endl;
+    std::cout << "ft_map   :: size :: " << ft_map1->size() << std::endl;
 
     std::cout << "######## COUNT ########" << std::endl;
-    std::cout << "map      :: count:: " << map1.count('a') << std::endl;
-    std::cout << "ft_map   :: count:: " << ft_map1.count('a') << std::endl;
-    std::cout << "map      :: count:: " << map1.count('p') << std::endl;
-    std::cout << "ft_map   :: count:: " << ft_map1.count('p') << std::endl;
+    std::cout << "map      :: count:: " << map1->count('a') << std::endl;
+    std::cout << "ft_map   :: count:: " << ft_map1->count('a') << std::endl;
+    std::cout << "map      :: count:: " << map1->count('p') << std::endl;
+    std::cout << "ft_map   :: count:: " << ft_map1->count('p') << std::endl;
 
-    map3['e'] = "je suis e";
-    ft_map3['e'] = "je suis e";
-    map3['d'] = "je suis d";
-    ft_map3['d'] = "je suis d";
-    map3['z'] = "je suis z";
-    ft_map3['z'] = "je suis z";
+    map3[0]['e'] = "je suis e";
+    ft_map3[0]['e'] = "je suis e";
+    map3[0]['d'] = "je suis d";
+    ft_map3[0]['d'] = "je suis d";
+    map3[0]['z'] = "je suis z";
+    ft_map3[0]['z'] = "je suis z";
 
     std::cout << "######## SIZE ########" << std::endl;
-    std::cout << "map1     :: size :: " << map1.size() << std::endl;
-    std::cout << "ft_map1  :: size :: " << ft_map1.size() << std::endl;
-    std::cout << "map3     :: size :: " << map3.size() << std::endl;
-    std::cout << "ft_map3  :: size :: " << ft_map3.size() << std::endl;
+    std::cout << "map1     :: size :: " << map1->size() << std::endl;
+    std::cout << "ft_map1  :: size :: " << ft_map1->size() << std::endl;
+    std::cout << "map3     :: size :: " << map3->size() << std::endl;
+    std::cout << "ft_map3  :: size :: " << ft_map3->size() << std::endl;
 
     std::cout << "######## SWAP ########" << std::endl;
-    map1.swap(map3);
-    ft_map1.swap(ft_map3);
+    map1->swap(map3[0]);
+    ft_map1->swap(ft_map3[0]);
 
     std::cout << "######## SIZE ########" << std::endl;
-    std::cout << "map1     :: size :: " << map1.size() << std::endl;
-    std::cout << "ft_map1  :: size :: " << ft_map1.size() << std::endl;
-    std::cout << "map3     :: size :: " << map3.size() << std::endl;
-    std::cout << "ft_map3  :: size :: " << ft_map3.size() << std::endl;
+    std::cout << "map1     :: size :: " << map1->size() << std::endl;
+    std::cout << "ft_map1  :: size :: " << ft_map1->size() << std::endl;
+    std::cout << "map3     :: size :: " << map3->size() << std::endl;
+    std::cout << "ft_map3  :: size :: " << ft_map3->size() << std::endl;
 
     std::cout << "######## = ########" << std::endl;
     map2 = map1;
     ft_map2 = ft_map1;
 
     std::cout << "######## SIZE ########" << std::endl;
-    std::cout << "map      :: size :: " << map2.size() << std::endl;
-    std::cout << "ft_map   :: size :: " << ft_map2.size() << std::endl;
+    std::cout << "map      :: size :: " << map2->size() << std::endl;
+    std::cout << "ft_map   :: size :: " << ft_map2->size() << std::endl;
 
     std::cout << "######## CLEAR ########" << std::endl;
-    map1.clear();
-    ft_map1.clear();
+    map1->clear();
+    ft_map1->clear();
 
     std::cout << "######## SIZE ########" << std::endl;
-    std::cout << "map      :: size :: " << map1.size() << std::endl;
-    std::cout << "ft_map   :: size :: " << ft_map1.size() << std::endl;
+    std::cout << "map      :: size :: " << map1->size() << std::endl;
+    std::cout << "ft_map   :: size :: " << ft_map1->size() << std::endl;
 
-    delete(ft_stack1);
-    delete(ft_queue2);
+    delete(ft_map1);
+    delete(ft_map3);
 }

@@ -19,12 +19,9 @@ class ft_map {
         ft_map_node<K, V> *node;
         const unsigned int max;
 
-        unsigned int count(ft_map_node<K, V> *target);
-        ft_map_node<K, V> *copie(ft_map_node<K, V> *target);
-        void supp(ft_map_node<K, V> *target);
-        ft_map_node<K, V> *find(K key, ft_map_node<K, V> *target) const;
-        void add(K key, ft_map_node<K, V> *target);
-        void add(K key, V value, ft_map_node<K, V> *target);
+        void add(K key);
+        void add(K key, V value);
+        ft_map_node<K, V> *find(K key);
 
     public:
         ft_map();
@@ -35,10 +32,9 @@ class ft_map {
         bool empty();
         size_type size();
         size_type max_size();
+        size_type count(const key_type& k) const;
         void swap(ft_map &target);
         void clear();
-
-        size_type count(const key_type& k) const;
 
         mapped_type &operator[](const key_type &target);
 
@@ -54,7 +50,7 @@ class ft_map {
                 iterator &operator--();
                 iterator &operator++(int);
                 iterator &operator--(int);
-                //T operator*();
+                bool operator==(ft_map::iterator &target);
                 bool operator!=(ft_map::iterator &target);
         };
 
@@ -77,23 +73,60 @@ ft_map<K, V>::ft_map() : max(100)
 }
 
 template<class K, class V>
-ft_map<K, V>::ft_map(const ft_map &target)
+ft_map<K, V>::ft_map(const ft_map &target)  : max(100)
 {
-    this->node = copie(target.node);
+    ft_map_node<K, V> *save_me;
+    ft_map_node<K, V> *save_target;
+
+    save_target = target.node;
+    this->node = NULL;
+    while(target.node != NULL)
+    {
+        if (this->node == NULL)
+        {
+            this->node = new ft_map_node<K, V>(target.node);
+            save_me = this->node;
+        }
+        else
+        {
+            this->node->setNext(new ft_map_node<K, V>(target.node));
+            this->node = this->node->getNext();
+        }
+        target.node = target.node->getNext();
+    }
+    this->node = save_me;
+    target.node = save_target;
 }
 
 template<class K, class V>
 ft_map<K, V> &ft_map<K, V>::operator=(const ft_map &target)
 {
-    supp(this->node);
-    this->node = copie(target.node);
+    ft_map_node<K, V> *tmp;
+
+    tmp = NULL;
+    while (this->node != NULL)
+    {
+        tmp = this->node;
+        this->node = this->node->getNext();
+        delete(tmp);
+    }
+    this->node = target.node;
     return (*this);
 }
 
 template<class K, class V>
 ft_map<K, V>::~ft_map()
 {
-    supp(this->node);
+    ft_map_node<K, V> *tmp;
+
+    tmp = NULL;
+    while (this->node != NULL)
+    {
+        tmp = this->node;
+        this->node = this->node->getNext();
+        delete(tmp);
+    }
+    this->node = NULL;
 }
 
 //****************************************
@@ -111,7 +144,18 @@ bool ft_map<K, V>::empty()
 template<class K, class V>
 typename ft_map<K, V>::size_type ft_map<K, V>::size()
 {
-    return (count(this->node));
+    unsigned int i;
+    ft_map_node<K, V> *tmp;
+
+    i = 0;
+    tmp = this->node;
+    while(this->node != NULL)
+    {
+        ++i;
+        this->node = this->node->getNext();
+    }
+    this->node = tmp;
+    return (i);
 }
 
 template<class K, class V>
@@ -132,19 +176,36 @@ void ft_map<K, V>::swap(ft_map &target)
 template<class K, class V>
 void ft_map<K, V>::clear()
 {
-    supp(this->node);
+    ft_map_node<K, V> *tmp;
+
+    tmp = this->node;
+    while (this->node != NULL)
+    {
+        tmp = this->node;
+        this->node = this->node->getNext();
+        delete(tmp);
+    }
     this->node = NULL;
 }
 
 template<class K, class V>
 typename ft_map<K, V>::size_type ft_map<K, V>::count(const key_type &k) const
 {
-    return (find(k, this->node) != NULL ? (1) : (0));
+    ft_map_node<K, V> *tmp;
+
+    tmp = this->node;
+    while (tmp != NULL)
+    {
+        if (tmp->getKey() == k)
+            return (1);
+        tmp = tmp->getNext();
+    }
+    return(0);
 }
 
 //****************************************
 //****************************************
-//FUNCTIONS ITERATE
+//BEGIN END
 //****************************************
 //****************************************
 
@@ -178,11 +239,9 @@ typename ft_map<K, V>::iterator ft_map<K, V>::rend()
 template<class K, class V>
 typename ft_map<K, V>::mapped_type &ft_map<K, V>::operator[](const key_type &target)
 {
-    if (find(target, this->node) == NULL)
-    {
-        add(target, this->node);
-    }
-    return (find(target, this->node)->getValueR());
+    if(find(target) == NULL)
+        add(target);
+    return(find(target)->getValueR());
 }
 
 //****************************************
@@ -192,124 +251,87 @@ typename ft_map<K, V>::mapped_type &ft_map<K, V>::operator[](const key_type &tar
 //****************************************
 
 template<class K, class V>
-unsigned int ft_map<K, V>::count(ft_map_node<K, V> *target)
+void ft_map<K, V>::add(K key)
 {
-    unsigned int size;
+    int stop = 0;
+    ft_map_node<K, V> *save;
+    ft_map_node<K, V> *last;
 
-    size = 0;
-    if (target != NULL)
+    save = this->node;
+    last = NULL;
+    while (this->node != NULL && stop == 0)
     {
-        ++size;
-        if (target->getLeft() != NULL)
-            size += count(target->getLeft());
-        if (target->getRight() != NULL)
-            size += count(target->getRight());
-    }
-    return (size);
-}
-
-template<class K, class V>
-ft_map_node<K, V> *ft_map<K, V>::copie(ft_map_node<K, V> *target)
-{
-    ft_map_node<K, V> *nw;
-
-    nw = NULL;
-    if (target != NULL)
-    {
-        nw = new ft_map_node<K, V>(target->getKey(), target->getValue());
-        if (target->getLeft() != NULL)
-            nw->setLeft(copie(target->getLeft()));
-        if (target->getRight() != NULL)
-            nw->setRight(copie(target->getRight()));
-    }
-    return (nw);
-}
-
-template<class K, class V>
-void ft_map<K, V>::supp(ft_map_node<K, V> *target)
-{
-    if (target != NULL)
-    {
-        if (target->getLeft() != NULL)
-            supp(target->getLeft());
-        if (target->getRight() != NULL)
-            supp(target->getRight());
-        delete(target);
-        target = NULL;
-    }
-}
-
-template<class K, class V>
-ft_map_node<K, V> *ft_map<K, V>::find(K key, ft_map_node<K, V> *target) const
-{
-    if(target != NULL)
-    {
-        if (target->getKey() == key)
-            return (target);
-        if (target->getLeft() != NULL)
-        {
-            if (find(key, target->getLeft()) != NULL)
-                return (find(key, target->getLeft()));
-        }
-        if (target->getRight() != NULL)
-        {
-            if (find(key, target->getRight()) != NULL)
-                return (find(key, target->getRight()));
-        }
-    }
-    return (NULL);
-}
-
-template<class K, class V>
-void ft_map<K, V>::add(K key, ft_map_node<K, V> *target)
-{
-    if (target != NULL)
-    {
-        if (key < target->getKey())
-        {
-            if (target->getLeft() == NULL)
-                target->setLeft(new ft_map_node<K, V>(key));
-            else
-                add(key, target->getLeft());    
-        }
+        if (this->node->getKey() > key)
+            stop = 1;
         else
         {
-            if (target->getRight() == NULL)
-                target->setRight(new ft_map_node<K, V>(key));
-            else
-                add(key, target->getRight());
+            last = this->node;
+            this->node = this->node->getNext();
         }
+    }
+    if (last == NULL)
+    {
+        last = new ft_map_node<K, V>(key);
+        last->setNext(this->node);
+        this->node = last;
     }
     else
     {
-        this->node = new ft_map_node<K, V>(key);
+        last->setNext(new ft_map_node<K, V>(key));
+        last->getNext()->setNext(this->node);
+        this->node = save;
     }
 }
 
 template<class K, class V>
-void ft_map<K, V>::add(K key, V value, ft_map_node<K, V> *target)
+void ft_map<K, V>::add(K key, V value)
 {
-    if (target != NULL)
+    int stop = 0;
+    ft_map_node<K, V> *save;
+    ft_map_node<K, V> *last;
+
+    save = this->node;
+    last = NULL;
+    while (this->node != NULL && stop == 0)
     {
-        if (key < target->getKey())
-        {
-            if (target->getLeft() == NULL)
-                target->setLeft(new ft_map_node<K, V>(key, value));
-            else
-                add(key, value, target->getLeft());    
-        }
+        if (this->node->getKey() > key)
+            stop = 1;
         else
         {
-            if (target->getRight() == NULL)
-                target->setRight(new ft_map_node<K, V>(key, value));
-            else
-                add(key, value, target->getRight());
+            last = this->node;
+            this->node = this->node->getNext();
         }
+    }
+    if (last == NULL)
+    {
+        last = new ft_map_node<K, V>(key, value);
+        last->setNext(this->node);
+        this->node = last;
     }
     else
     {
-        this->node = new ft_map_node<K, V>(key, value);
+        last->setNext(new ft_map_node<K, V>(key, value));
+        last->getNext()->setNext(this->node);
+        this->node = save;
     }
+}
+
+template<class K, class V>
+ft_map_node<K, V> *ft_map<K, V>::find(K key)
+{
+    ft_map_node<K, V> *save;
+    ft_map_node<K, V> *tmp;
+
+    save = this->node;
+    while (this->node != NULL)
+    {
+        if (this->node->getKey() == key)
+            break;
+        this->node = this->node->getNext();
+    }
+    tmp = this->node;
+    this->node = save;
+    return (tmp);
 }
 
 //****************************************
@@ -351,6 +373,11 @@ typename ft_map<K, V>::iterator &ft_map<K, V>::iterator::operator--(int i)
     iterator    tmp(*this);
     operator--();
     return tmp;
+}
+template<class K, class V>
+bool ft_map<K, V>::iterator::operator==(ft_map::iterator &target)
+{
+    return(this->index == target.index);
 }
 template<class K, class V>
 bool ft_map<K, V>::iterator::operator!=(ft_map::iterator &target)
