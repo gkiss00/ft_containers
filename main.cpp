@@ -231,12 +231,29 @@ int     main()
     std::cout << "\\*****************/" << std::endl;
 
     std::map<char, std::string> map1;
+    std::map<char, std::string> map2;
     ft_map<char, std::string> ft_map1;
+    ft_map<char, std::string> ft_map2;
 
+    std::cout << "######## [] ########" << std::endl;
     map1['a'] = "je suis a";
     ft_map1['a'] = "je suis a";
     std::cout << "map      :: [a]  :: " << map1['a'] << std::endl;
     std::cout << "ft_map   :: [a]  :: " << ft_map1['a'] << std::endl;
+    std::cout << "map      :: [b]  :: " << map1['b'] << std::endl;
+    std::cout << "ft_map   :: [b]  :: " << ft_map1['b'] << std::endl;
+
+    std::cout << "######## SIZE ########" << std::endl;
+    std::cout << "map      :: size :: " << map1.size() << std::endl;
+    std::cout << "ft_map   :: size :: " << ft_map1.size() << std::endl;
+
+    std::cout << "######## = ########" << std::endl;
+    map2 = map1;
+    ft_map2 = ft_map1;
+
+    std::cout << "######## SIZE ########" << std::endl;
+    std::cout << "map      :: size :: " << map2.size() << std::endl;
+    std::cout << "ft_map   :: size :: " << ft_map2.size() << std::endl;
 
     delete(ft_stack1);
     delete(ft_queue2);

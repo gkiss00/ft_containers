@@ -8,6 +8,9 @@
 
 template<class T>
 class ft_stack {
+    public:
+        typedef T value_type;
+        typedef unsigned int size_type;
     private:
         ft_node<T> *node;
     public:
@@ -17,8 +20,8 @@ class ft_stack {
         ~ft_stack();
 
         bool empty();
-        unsigned int size();
-        T top();
+        size_type size();
+        value_type top();
         void push(T target);
         void pop();
 
@@ -110,7 +113,7 @@ bool ft_stack<T>::empty()
 }
 
 template<class T>
-unsigned int ft_stack<T>::size()
+typename ft_stack<T>::size_type ft_stack<T>::size()
 {
     unsigned int i;
     ft_node<T> *tmp;
@@ -127,7 +130,7 @@ unsigned int ft_stack<T>::size()
 }
 
 template<class T>
-T ft_stack<T>::top()
+typename ft_stack<T>::value_type ft_stack<T>::top()
 {
     ft_node<T> *tmp;
     ft_node<T> *ret;

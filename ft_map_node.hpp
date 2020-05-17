@@ -15,6 +15,7 @@ class ft_map_node {
         ft_map_node *right;
         ft_map_node();
     public:
+        ft_map_node(K key);
         ft_map_node(K key, V value);
         ft_map_node(const ft_map_node<K, V> &target);
         ft_map_node &operator=(const ft_map_node<K, V> &target);
@@ -44,6 +45,14 @@ ft_map_node<K, V>::ft_map_node()
 {
     this->key = 0;
     this->value = 0;
+    this->parent = NULL;
+    this->left = NULL;
+    this->right = NULL;
+}
+template<class K,class V>
+ft_map_node<K, V>::ft_map_node(K key)
+{
+    this->key = key;
     this->parent = NULL;
     this->left = NULL;
     this->right = NULL;

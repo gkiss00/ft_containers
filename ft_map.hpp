@@ -14,6 +14,7 @@ class ft_map {
         ft_map_node<K, V> *copie(ft_map_node<K, V> *target);
         void supp(ft_map_node<K, V> *target);
         ft_map_node<K, V> *find(K key, ft_map_node<K, V> *target);
+        void add(K key, ft_map_node<K, V> *target);
         void add(K key, V value, ft_map_node<K, V> *target);
 
     public:
@@ -94,12 +95,9 @@ unsigned int ft_map<K, V>::max_size()
 template<class K, class V>
 V &ft_map<K, V>::operator[](const K &target)
 {
-    std::cout << "operator in" << std::endl;
     if (find(target, this->node) == NULL)
     {
-        std::cout << "pas trouve" << std::endl;
-        add(target, NULL, this->node);
-        std::cout << "add done" << std::endl;
+        add(target, this->node);
     }
     return (find(target, this->node)->getValueR());
 }
@@ -180,12 +178,36 @@ ft_map_node<K, V> *ft_map<K, V>::find(K key, ft_map_node<K, V> *target)
 }
 
 template<class K, class V>
-void ft_map<K, V>::add(K key, V value, ft_map_node<K, V> *target)
+void ft_map<K, V>::add(K key, ft_map_node<K, V> *target)
 {
-    std::cout << "add" << std::endl;
     if (target != NULL)
     {
-        std::cout << "target != NULL" << std::endl;
+        if (key < target->getKey())
+        {
+            if (target->getLeft() == NULL)
+                target->setLeft(new ft_map_node<K, V>(key));
+            else
+                add(key, target->getLeft());    
+        }
+        else
+        {
+            if (target->getRight() == NULL)
+                target->setRight(new ft_map_node<K, V>(key));
+            else
+                add(key, target->getRight());
+        }
+    }
+    else
+    {
+        this->node = new ft_map_node<K, V>(key);
+    }
+}
+
+template<class K, class V>
+void ft_map<K, V>::add(K key, V value, ft_map_node<K, V> *target)
+{
+    if (target != NULL)
+    {
         if (key < target->getKey())
         {
             if (target->getLeft() == NULL)
@@ -203,7 +225,6 @@ void ft_map<K, V>::add(K key, V value, ft_map_node<K, V> *target)
     }
     else
     {
-        std::cout << "target == NULL" << std::endl;
         this->node = new ft_map_node<K, V>(key, value);
     }
 }

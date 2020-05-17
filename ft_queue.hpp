@@ -8,6 +8,9 @@
 
 template<class T>
 class ft_queue {
+    public:
+        typedef T value_type;
+        typedef unsigned int size_type;
     private:
         ft_node<T> *node;
     public:
@@ -17,9 +20,9 @@ class ft_queue {
         ~ft_queue();
 
         bool empty();
-        unsigned int size();
-        T front();
-        T back();
+        size_type size();
+        value_type front();
+        value_type back();
         void push(T target);
         void pop();
 
@@ -111,7 +114,7 @@ bool ft_queue<T>::empty()
 }
 
 template<class T>
-unsigned int ft_queue<T>::size()
+typename ft_queue<T>::size_type ft_queue<T>::size()
 {
     unsigned int i;
     ft_node<T> *tmp;
@@ -128,7 +131,7 @@ unsigned int ft_queue<T>::size()
 }
 
 template<class T>
-T ft_queue<T>::front()
+typename ft_queue<T>::value_type ft_queue<T>::front()
 {
     if (this->node != NULL)
         return(this->node->getElement());
@@ -136,7 +139,7 @@ T ft_queue<T>::front()
 }
 
 template<class T>
-T ft_queue<T>::back()
+typename ft_queue<T>::value_type ft_queue<T>::back()
 {
     ft_node<T> *tmp;
     ft_node<T> *ret;
