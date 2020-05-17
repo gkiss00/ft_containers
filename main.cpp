@@ -17,7 +17,7 @@ int     main()
     ft_stack<int> *ft_stack1 = new ft_stack<int>();
     ft_stack<int> *ft_stack2 = new ft_stack<int>();
 
-    std::cout << "########PUSH########" << std::endl;
+    std::cout << "######## PUSH ########" << std::endl;
     
     stack1->push(5);
     stack1->push(-21);
@@ -76,8 +76,10 @@ int     main()
     std::cout << "######## POP ########" << std::endl;
     stack1->pop();
     ft_stack1->pop();
+    std::cout << "######## TOP ########" << std::endl;
     std::cout << "stack    :: top  :: " << stack1->top() << " " << stack2->top() << std::endl;
     std::cout << "ft_stack :: top  :: " << ft_stack1->top() << " " << ft_stack2->top() << std::endl;
+    std::cout << "######## SIZE ########" << std::endl;
     std::cout << "stack    :: size :: " << stack1->size() << " " << stack2->size() << std::endl;
     std::cout << "ft_stack :: size :: " << ft_stack1->size() << " " << ft_stack2->size() << std::endl;
 
@@ -184,7 +186,7 @@ int     main()
 
     std::cout << "######## POP ########" << std::endl;
     queue1->pop();
-    ft_stack1->pop();
+    ft_queue1->pop();
     std::cout << "######## FRONT ########" << std::endl;
     std::cout << "stack    :: front:: " << queue1->front() << " " << queue2->front() << std::endl;
     std::cout << "ft_stack :: front:: " << ft_queue1->front() << " " << ft_queue2->front() << std::endl;
