@@ -46,7 +46,26 @@ ft_queue<T>::ft_queue()
 template<class T>
 ft_queue<T>::ft_queue(const ft_queue &target)
 {
-    this->node = target.node;
+    ft_node<T> *tmp;
+    ft_node<T> *node;
+
+    tmp = NULL;
+    node = target.node;
+    for (unsigned int i = 0; i < target.size(); ++i)
+    {
+        if (i == 0)
+        {
+            this->node = new ft_node<T>(node->getElement());
+            tmp = this->node;
+        }
+        else
+        {
+            this->node->setNext(new ft_node<T>(node->getElement()));
+            this->node = this->node->getNext();
+        }
+        node = node->getNext();
+    }
+    this->node = tmp;
 }
 
 template<class T>

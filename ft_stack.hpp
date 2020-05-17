@@ -45,7 +45,26 @@ ft_stack<T>::ft_stack()
 template<class T>
 ft_stack<T>::ft_stack(const ft_stack &target)
 {
-    this->node = target.node;
+    ft_node<T> *tmp;
+    ft_node<T> *node;
+
+    tmp = NULL;
+    node = target.node;
+    for (unsigned int i = 0; i < target.size(); ++i)
+    {
+        if (i == 0)
+        {
+            this->node = new ft_node<T>(node->getElement());
+            tmp = this->node;
+        }
+        else
+        {
+            this->node->setNext(new ft_node<T>(node->getElement()));
+            this->node = this->node->getNext();
+        }
+        node = node->getNext();
+    }
+    this->node = tmp;
 }
 
 template<class T>
