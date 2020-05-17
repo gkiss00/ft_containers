@@ -22,7 +22,7 @@ class ft_stack {
         void push(T target);
         void pop();
 
-        friend bool operator==(ft_stack<T> &me, ft_stack<T> &target);
+        bool operator==(ft_stack<T> &target);
         friend bool operator!=(ft_stack<T> &me, ft_stack<T> &target);
         friend bool operator<(ft_stack<T> &me, ft_stack<T> &target);
         friend bool operator<=(ft_stack<T> &me, ft_stack<T> &target);
@@ -179,16 +179,16 @@ void ft_stack<T>::pop()
 //****************************************
 
 template<class T>
-bool operator==(const ft_stack<T> &me, const ft_stack<T> &target)
+bool ft_stack<T>::operator==(ft_stack<T> &target)
 {
     unsigned int size;
     ft_node<T> *node1;
     ft_node<T> *node2;
 
-    size = me.size() > target.size() ? (me.size()) : (target.size());
-    node1 = me.node;
+    size = this->size() > target.size() ? (this->size()) : (target.size());
+    node1 = this->node;
     node2 = target.node;
-    if ((me.size()) != (target.size()))
+    if ((this->size()) != (target.size()))
         return (false);
     for(unsigned int i = 0; i < size; ++i)
     {
