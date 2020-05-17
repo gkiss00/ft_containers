@@ -232,8 +232,10 @@ int     main()
 
     std::map<char, std::string> map1;
     std::map<char, std::string> map2;
+    std::map<char, std::string> map3;
     ft_map<char, std::string> ft_map1;
     ft_map<char, std::string> ft_map2;
+    ft_map<char, std::string> ft_map3;
 
     std::cout << "######## [] ########" << std::endl;
     map1['a'] = "je suis a";
@@ -247,6 +249,35 @@ int     main()
     std::cout << "map      :: size :: " << map1.size() << std::endl;
     std::cout << "ft_map   :: size :: " << ft_map1.size() << std::endl;
 
+    std::cout << "######## COUNT ########" << std::endl;
+    std::cout << "map      :: count:: " << map1.count('a') << std::endl;
+    std::cout << "ft_map   :: count:: " << ft_map1.count('a') << std::endl;
+    std::cout << "map      :: count:: " << map1.count('p') << std::endl;
+    std::cout << "ft_map   :: count:: " << ft_map1.count('p') << std::endl;
+
+    map3['e'] = "je suis e";
+    ft_map3['e'] = "je suis e";
+    map3['d'] = "je suis d";
+    ft_map3['d'] = "je suis d";
+    map3['z'] = "je suis z";
+    ft_map3['z'] = "je suis z";
+
+    std::cout << "######## SIZE ########" << std::endl;
+    std::cout << "map1     :: size :: " << map1.size() << std::endl;
+    std::cout << "ft_map1  :: size :: " << ft_map1.size() << std::endl;
+    std::cout << "map3     :: size :: " << map3.size() << std::endl;
+    std::cout << "ft_map3  :: size :: " << ft_map3.size() << std::endl;
+
+    std::cout << "######## SWAP ########" << std::endl;
+    map1.swap(map3);
+    ft_map1.swap(ft_map3);
+
+    std::cout << "######## SIZE ########" << std::endl;
+    std::cout << "map1     :: size :: " << map1.size() << std::endl;
+    std::cout << "ft_map1  :: size :: " << ft_map1.size() << std::endl;
+    std::cout << "map3     :: size :: " << map3.size() << std::endl;
+    std::cout << "ft_map3  :: size :: " << ft_map3.size() << std::endl;
+
     std::cout << "######## = ########" << std::endl;
     map2 = map1;
     ft_map2 = ft_map1;
@@ -254,6 +285,14 @@ int     main()
     std::cout << "######## SIZE ########" << std::endl;
     std::cout << "map      :: size :: " << map2.size() << std::endl;
     std::cout << "ft_map   :: size :: " << ft_map2.size() << std::endl;
+
+    std::cout << "######## CLEAR ########" << std::endl;
+    map1.clear();
+    ft_map1.clear();
+
+    std::cout << "######## SIZE ########" << std::endl;
+    std::cout << "map      :: size :: " << map1.size() << std::endl;
+    std::cout << "ft_map   :: size :: " << ft_map1.size() << std::endl;
 
     delete(ft_stack1);
     delete(ft_queue2);
