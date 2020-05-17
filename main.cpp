@@ -1,9 +1,11 @@
 #include "ft_stack.hpp"
 #include "ft_queue.hpp"
+#include "ft_map.hpp"
 #include <iostream>
 #include <string>
 #include <stack>
 #include <queue>
+#include <map>
 
 int     main()
 {
@@ -222,6 +224,19 @@ int     main()
     std::cout << "######## > ########" << std::endl;
     std::cout << "stack    :: >=   :: " << (*queue1 >= *queue2) << std::endl;
     std::cout << "ft_stack :: >=   :: " << (*ft_queue1 >= *ft_queue2) << std::endl;
+
+
+    std::cout << "/*****************\\" << std::endl;
+    std::cout << "   MAP VS FT_MAP    " << std::endl;
+    std::cout << "\\*****************/" << std::endl;
+
+    std::map<char, std::string> map1;
+    ft_map<char, std::string> ft_map1;
+
+    map1['a'] = "je suis a";
+    ft_map1['a'] = "je suis a";
+    std::cout << "map      :: [a]  :: " << map1['a'] << std::endl;
+    std::cout << "ft_map   :: [a]  :: " << ft_map1['a'] << std::endl;
 
     delete(ft_stack1);
     delete(ft_queue2);
