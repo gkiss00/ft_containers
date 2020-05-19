@@ -56,6 +56,7 @@ int     main()
     ft_map3->insert(std::pair<char, std::string>('k', "je suis k"));
 
     std::cout << "######## ITERATOR ########" << std::endl;
+    std::map<char, std::string>::iterator map_begin = map3->begin();
     ft_map<char, std::string>::iterator begin = ft_map3->begin();
     ft_map<char, std::string>::iterator end = ft_map3->end();
 
@@ -69,6 +70,10 @@ int     main()
     map3->insert(std::pair<char, std::string>('k', "je suis le nouveau k"));
     ft_map3->insert(std::pair<char, std::string>('k', "je suis le nouveau k"));
 
+    std::cout << "######## INSERT ########" << std::endl;
+    map3->insert(map_begin, std::pair<char, std::string>('p', "je suis p"));
+    ft_map3->insert(begin, std::pair<char, std::string>('p', "je suis p"));
+
     std::cout << "######## R-ITERATOR ########" << std::endl;
     ft_map<char, std::string>::iterator rbegin = ft_map3->rbegin();
     ft_map<char, std::string>::iterator rend = ft_map3->rend();
@@ -78,6 +83,10 @@ int     main()
         std::cout << rend.first << " " << rend.second << std::endl;
         ++rend;
     }
+
+    std::cout << "######## INSERT ########" << std::endl;
+    map3->insert(map_begin, std::pair<char, std::string>('p', "je suis le nouveau p"));
+    ft_map3->insert(begin, std::pair<char, std::string>('p', "je suis le nouveau p"));
 
     std::cout << "######## FIND ########" << std::endl;
     ft_map<char, std::string>::iterator find_begin = ft_map3->find('e');

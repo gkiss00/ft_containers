@@ -81,7 +81,7 @@ class ft_map {
 
         //MODIFIERS
         std::pair<iterator,bool> insert (const value_type& val);
-        //iterator insert (iterator position, const value_type& val);
+        ft_map::iterator insert(ft_map<K, V, Compare>::iterator position, const value_type& val);
         //template <class InputIterator>
         //void insert (InputIterator first, InputIterator last);
         //void erase (iterator position);
@@ -271,7 +271,7 @@ typename ft_map<K, V, Compare>::mapped_type &ft_map<K, V, Compare>::operator[](c
 //****************************************
 
 template<class K, class V, class Compare>
-std::pair<typename ft_map<K, V, Compare>::iterator,bool> ft_map<K, V, Compare>::insert (const value_type& val)
+std::pair<typename ft_map<K, V, Compare>::iterator,bool> ft_map<K, V, Compare>::insert(const value_type& val)
 {
     ft_map_node<K, V> *tmp;
 
@@ -285,6 +285,25 @@ std::pair<typename ft_map<K, V, Compare>::iterator,bool> ft_map<K, V, Compare>::
     {
         add(val.first, val.second);
         return (std::pair<ft_map<K, V, Compare>::iterator, bool>(ft_map<K, V, Compare>::iterator(*this, get_index(val.first)), true));
+    }
+}
+
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::iterator ft_map<K, V, Compare>::insert(ft_map<K, V, Compare>::iterator position, const value_type& val)
+{
+    (void)position;
+    ft_map_node<K, V> *tmp;
+
+    tmp = NULL;
+    if((tmp = find_key(val.first)) != NULL)
+    {
+        tmp->setValue(val.second);
+        return (ft_map<K, V, Compare>::iterator(*this, get_index(val.first)));
+    }
+    else
+    {
+        add(val.first, val.second);
+        return (ft_map<K, V, Compare>::iterator(*this, get_index(val.first)));
     }
 }
 
