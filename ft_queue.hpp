@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <iostream>
 
-
+namespace ft {
 template<class T>
 class ft_queue {
     public:
@@ -293,6 +293,8 @@ template<class T>
 bool ft_queue<T>::operator>=(ft_queue<T> &target)
 {
     return (this->operator>(target) || this->operator==(target));
+}
+
 }
 
 #endif
