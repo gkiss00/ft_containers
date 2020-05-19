@@ -51,6 +51,10 @@ int     main()
     std::cout << "map      :: count:: " << map1->count('p') << std::endl;
     std::cout << "ft_map   :: count:: " << ft_map1->count('p') << std::endl;
 
+    std::cout << "######## INSERT ########" << std::endl;
+    map3->insert(std::pair<char, std::string>('k', "je suis k"));
+    ft_map3->insert(std::pair<char, std::string>('k', "je suis k"));
+
     std::cout << "######## ITERATOR ########" << std::endl;
     ft_map<char, std::string>::iterator begin = ft_map3->begin();
     ft_map<char, std::string>::iterator end = ft_map3->end();
@@ -60,6 +64,10 @@ int     main()
         std::cout << begin.first << " " << begin.second << std::endl;
         ++begin;
     }
+
+    std::cout << "######## INSERT ########" << std::endl;
+    map3->insert(std::pair<char, std::string>('k', "je suis le nouveau k"));
+    ft_map3->insert(std::pair<char, std::string>('k', "je suis le nouveau k"));
 
     std::cout << "######## R-ITERATOR ########" << std::endl;
     ft_map<char, std::string>::iterator rbegin = ft_map3->rbegin();
