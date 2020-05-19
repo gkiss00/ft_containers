@@ -82,8 +82,7 @@ class ft_map {
         //MODIFIERS
         std::pair<iterator,bool> insert (const value_type& val);
         ft_map::iterator insert(ft_map<K, V, Compare>::iterator position, const value_type& val);
-        //template <class InputIterator>
-        //void insert (InputIterator first, InputIterator last);
+        void insert(ft_map<K, V, Compare>::iterator first, ft_map<K, V, Compare>::iterator last);
         //void erase (iterator position);
         //size_type erase (const key_type& k);
         //void erase (iterator first, iterator last);
@@ -304,6 +303,23 @@ typename ft_map<K, V, Compare>::iterator ft_map<K, V, Compare>::insert(ft_map<K,
     {
         add(val.first, val.second);
         return (ft_map<K, V, Compare>::iterator(*this, get_index(val.first)));
+    }
+}
+
+template<class K, class V, class Compare>
+void ft_map<K, V, Compare>::insert(ft_map<K, V, Compare>::iterator first, ft_map<K, V, Compare>::iterator last)
+{
+    ft_map_node<K, V> *tmp;
+
+    tmp = NULL;
+    while (first != last)
+    {
+        tmp = NULL;
+        if((tmp = find_key(first.first)) != NULL)
+            tmp->setValue(first.second);
+        else
+            add(first.first, first.second);
+        ++first;
     }
 }
 
