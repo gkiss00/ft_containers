@@ -10,6 +10,24 @@
 template<class K, class V, class Compare = std::less<K> >
 class ft_map {
     public:
+        typedef K key_type;
+        typedef V mapped_type;
+        typedef std::pair<K, V> value_type;
+        class key_compare {
+            private:
+                Compare cmp;
+                key_compare(Compare c) : cmp(c) {}
+        };
+        class value_compare {
+            private:
+                Compare cmp;
+                value_compare(Compare c) : cmp(c) {}
+            public:
+                bool operator() (const value_type& x, const value_type& y) const
+                {
+                    return comp(x.first, y.first);
+                }
+        };
         class iterator {
             private:
                 ft_map<K, V, Compare> &target;
@@ -74,14 +92,7 @@ class ft_map {
                 bool operator==(ft_map::const_reverse_iterator &target);
                 bool operator!=(ft_map::const_reverse_iterator &target);
         };
-        typedef K key_type;
-        typedef V mapped_type;
-        typedef std::pair<K, V> value_type;
-        typedef Compare key_compare;
-        typedef bool value_compare;
         //typedef Alloc allocator_type;
-        //typedef reverse_iterator;
-        //typedef const_reverse_iterator;
         typedef unsigned int size_type;
 
     private:
@@ -137,19 +148,19 @@ class ft_map {
         void clear();
 
         //OBSERVERS
-        //key_compare key_comp() const;
-        //value_compare value_comp() const;
+        key_compare key_comp() const;
+        value_compare value_comp() const;
 
         //OPERATIONS
         iterator find(const key_type& k);
-        //const_iterator find(const key_type& k) const;
+        const_iterator find(const key_type& k) const;
         size_type count(const key_type& k) const;
         iterator lower_bound(const key_type& k);
-        //const_iterator lower_bound (const key_type& k) const;
+        const_iterator lower_bound(const key_type& k) const;
         iterator upper_bound (const key_type& k);
-        //const_iterator upper_bound (const key_type& k) const;
-        //std::pair<ft_map::iterator,ft_map::iterator> equal_range(const key_type& k);
-        //std::pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
+        const_iterator upper_bound(const key_type& k) const;
+        std::pair<ft_map::iterator,ft_map::iterator> equal_range(const key_type& k);
+        std::pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
         
 };
 
@@ -441,6 +452,24 @@ void ft_map<K, V, Compare>::clear()
 
 //****************************************
 //****************************************
+//OBSERVERS
+//****************************************
+//****************************************
+
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::key_compare ft_map<K, V, Compare>::key_comp() const
+{
+    return (ft_map<K, V, Compare>::key_compare(this->cmp));
+}
+
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::value_compare ft_map<K, V, Compare>::value_comp() const
+{
+    return (ft_map<K, V, Compare>::value_compare(this->cmp));
+}
+
+//****************************************
+//****************************************
 //OPERATIONS
 //****************************************
 //****************************************
@@ -463,6 +492,25 @@ typename ft_map<K, V, Compare>::iterator ft_map<K, V, Compare>::find(const key_t
     }
     this->node = save;
     return (ft_map<K, V, Compare>::iterator(*this, i));
+}
+
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::const_iterator ft_map<K, V, Compare>::find(const key_type& k) const
+{
+    ft_map_node<K, V> *save;
+    unsigned int i;
+
+    i = 0;
+    save = this->node;
+    while(this->node != NULL)
+    {
+        if (this->node->getKey() == k)
+            break;
+        this->node = this->node->getNext();
+        ++i;
+    }
+    this->node = save;
+    return (ft_map<K, V, Compare>::const_iterator(*this, i));
 }
 
 template<class K, class V, class Compare>
@@ -500,6 +548,25 @@ typename ft_map<K, V, Compare>::iterator ft_map<K, V, Compare>::lower_bound(cons
 }
 
 template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::const_iterator ft_map<K, V, Compare>::lower_bound(const key_type& k) const
+{
+    ft_map_node<K, V> *save;
+    unsigned int i;
+
+    i = 0;
+    save = this->node;
+    while(this->node != NULL)
+    {
+        if (this->node->getKey() == k)
+            break;
+        this->node = this->node->getNext();
+        ++i;
+    }
+    this->node = save;
+    return (ft_map<K, V, Compare>::const_iterator(*this, i));
+}
+
+template<class K, class V, class Compare>
 typename ft_map<K, V, Compare>::iterator ft_map<K, V, Compare>::upper_bound(const key_type& k)
 {
     ft_map_node<K, V> *save;
@@ -518,6 +585,59 @@ typename ft_map<K, V, Compare>::iterator ft_map<K, V, Compare>::upper_bound(cons
     if (i != size())
         return (ft_map<K, V, Compare>::iterator(*this, i + 1));
     return (ft_map<K, V, Compare>::iterator(*this, i));
+}
+
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::const_iterator ft_map<K, V, Compare>::upper_bound(const key_type& k) const
+{
+    ft_map_node<K, V> *save;
+    unsigned int i;
+
+    i = 0;
+    save = this->node;
+    while(this->node != NULL)
+    {
+        if (this->node->getKey() == k)
+            break;
+        this->node = this->node->getNext();
+        ++i;
+    }
+    this->node = save;
+    if (i != size())
+        return (ft_map<K, V, Compare>::const_iterator(*this, i + 1));
+    return (ft_map<K, V, Compare>::const_iterator(*this, i));
+}
+
+template<class K, class V, class Compare>
+std::pair<typename ft_map<K, V, Compare>::iterator, typename ft_map<K, V, Compare>::iterator> ft_map<K, V, Compare>::equal_range(const key_type& k)
+{
+    ft_map<K, V, Compare>::iterator i1;
+    ft_map<K, V, Compare>::iterator i2;
+    if (get_index(k) != -1)
+    {
+        i1 = ft_map<K, V, Compare>::iterator(*this, get_index(k));
+        i2 = ft_map<K, V, Compare>::iterator(*this, get_index(k) + 1);
+        return (std::pair<ft_map<K, V, Compare>::iterator, ft_map<K, V, Compare>::iterator>(i1, i2));
+    }
+    i1 = ft_map<K, V, Compare>::iterator(*this, size());
+    i2 = ft_map<K, V, Compare>::iterator(*this, size());
+    return (std::pair<ft_map<K, V, Compare>::iterator, ft_map<K, V, Compare>::iterator>(i1, i2));
+}
+
+template<class K, class V, class Compare>
+std::pair<typename ft_map<K, V, Compare>::const_iterator, typename ft_map<K, V, Compare>::const_iterator> ft_map<K, V, Compare>::equal_range(const key_type& k) const
+{
+    ft_map<K, V, Compare>::const_iterator i1;
+    ft_map<K, V, Compare>::const_iterator i2;
+    if (get_index(k) != -1)
+    {
+        i1 = ft_map<K, V, Compare>::const_iterator(*this, get_index(k));
+        i2 = ft_map<K, V, Compare>::iterator(*this, get_index(k) + 1);
+        return (std::pair<ft_map<K, V, Compare>::const_iterator, ft_map<K, V, Compare>::const_iterator>(i1, i2));
+    }
+    i1 = ft_map<K, V, Compare>::const_iterator(*this, size());
+    i2 = ft_map<K, V, Compare>::const_iterator(*this, size());
+    return (std::pair<ft_map<K, V, Compare>::const_iterator, ft_map<K, V, Compare>::const_iterator>(i1, i2));
 }
 
 //****************************************
@@ -1007,5 +1127,19 @@ bool ft_map<K, V, Compare>::const_reverse_iterator::operator!=(ft_map::const_rev
 {
     return(this->index != target.index);
 }
+
+//****************************************
+//****************************************
+//KEY COMPARE
+//****************************************
+//****************************************
+
+
+
+//****************************************
+//****************************************
+//VALUE COMPARE
+//****************************************
+//****************************************
 
 #endif
