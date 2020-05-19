@@ -59,10 +59,11 @@ int     main()
     std::map<char, std::string>::iterator map_begin = map3->begin();
     ft_map<char, std::string>::iterator begin = ft_map3->begin();
     ft_map<char, std::string>::iterator end = ft_map3->end();
+    ft_map<char, std::string>::value_compare vc = ft_map3->value_comp();
 
     while(begin != end)
     {
-        std::cout << begin.first << " " << begin.second << std::endl;
+        std::cout << vc(*begin, *begin) << " " << begin.second << std::endl;
         ++begin;
     }
 

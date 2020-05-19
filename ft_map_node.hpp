@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string>
 #include <iostream>
+#include <utility>
 
 template<class K,class V>
 class ft_map_node {
@@ -38,7 +39,6 @@ template<class K,class V>
 ft_map_node<K, V>::ft_map_node()
 {
     this->key = 0;
-    this->value = 0;
     this->next = NULL;
 }
 template<class K,class V>
