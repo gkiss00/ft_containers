@@ -84,6 +84,10 @@ int     main()
         ++rend;
     }
 
+    std::cout << "######## ERASE ########" << std::endl;
+    map3->erase(map3->find('k'));
+    ft_map3->erase(ft_map3->find('k'));
+
     std::cout << "######## INSERT ########" << std::endl;
     map3->insert(map_begin, std::pair<char, std::string>('p', "je suis le nouveau p"));
     ft_map3->insert(begin, std::pair<char, std::string>('p', "je suis le nouveau p"));

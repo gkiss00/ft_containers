@@ -44,6 +44,7 @@ class ft_map {
         const unsigned int max;
 
         void add(K key);
+        void supp(K key);
         void add(K key, V value);
         void del();
         ft_map_node<K, V> *get(unsigned int i);
@@ -83,9 +84,9 @@ class ft_map {
         std::pair<iterator,bool> insert (const value_type& val);
         ft_map::iterator insert(ft_map<K, V, Compare>::iterator position, const value_type& val);
         void insert(ft_map<K, V, Compare>::iterator first, ft_map<K, V, Compare>::iterator last);
-        //void erase (iterator position);
-        //size_type erase (const key_type& k);
-        //void erase (iterator first, iterator last);
+        void erase(ft_map<K, V, Compare>::iterator position);
+        //size_type erase(const key_type& k);
+        //void erase(iterator first, iterator last);
         void swap(ft_map &target);
         void clear();
 
@@ -94,8 +95,8 @@ class ft_map {
         //value_compare value_comp() const;
 
         //OPERATIONS
-        ft_map::iterator find (const key_type& k);
-        //const_iterator find (const key_type& k) const;
+        ft_map::iterator find(const key_type& k);
+        //const_iterator find(const key_type& k) const;
         size_type count(const key_type& k) const;
         ft_map::iterator lower_bound(const key_type& k);
         //const_iterator lower_bound (const key_type& k) const;
@@ -324,6 +325,13 @@ void ft_map<K, V, Compare>::insert(ft_map<K, V, Compare>::iterator first, ft_map
 }
 
 template<class K, class V, class Compare>
+void ft_map<K, V, Compare>::erase(ft_map<K, V, Compare>::iterator position)
+{
+    if (find_key(position.first) != NULL)
+        supp(position.first);
+}
+
+template<class K, class V, class Compare>
 void ft_map<K, V, Compare>::swap(ft_map &target)
 {
     ft_map_node<K, V> *tmp;
@@ -502,6 +510,42 @@ void ft_map<K, V, Compare>::add(K key, V value)
     {
         last->setNext(new ft_map_node<K, V>(key, value));
         last->getNext()->setNext(this->node);
+        this->node = save;
+    }
+}
+
+template<class K, class V, class Compare>
+void ft_map<K, V, Compare>::supp(K key)
+{
+    int stop = 0;
+    ft_map_node<K, V> *save;
+    ft_map_node<K, V> *last;
+    ft_map_node<K, V> *tmp;
+
+    save = this->node;
+    last = NULL;
+    tmp = NULL;
+    while (this->node != NULL && stop == 0)
+    {
+        if (this->node->getKey() == key)
+            stop = 1;
+        else
+        {
+            last = this->node;
+            this->node = this->node->getNext();
+        }
+    }
+    if (last == NULL)
+    {
+        tmp = this->node->getNext();
+        delete(this->node);
+        this->node = tmp;
+    }
+    else
+    {
+        tmp = this->node->getNext();
+        delete(this->node);
+        last->setNext(tmp);
         this->node = save;
     }
 }
