@@ -7,15 +7,17 @@
 #include <utility>
 #include <functional>
 
-template<class K, class V>
+template<class K, class V, class Compare = std::less<K>>
 class ft_map {
     public:
         typedef K key_type;
         typedef V mapped_type;
-        //typedef Compare key_compare;
+        typedef Compare key_compare;
+        typedef bool value_compare;
         typedef std::pair<K, V> value_type;
         typedef unsigned int size_type;
     private:
+        Compare cmp;
         ft_map_node<K, V> *node;
         const unsigned int max;
 
@@ -26,28 +28,14 @@ class ft_map {
         ft_map_node<K, V> *find_key(K key);
 
     public:
-        ft_map();
-        ft_map(const ft_map &target);
-        ft_map &operator=(const ft_map &target);
-        ~ft_map();
-
-        bool empty();
-        size_type size();
-        size_type max_size();
-        size_type count(const key_type& k) const;
-        void swap(ft_map &target);
-        void clear();
-
-        mapped_type &operator[](const key_type &target);
-
         class iterator {
             private:
-                ft_map<K, V> &target;
+                ft_map<K, V, Compare> &target;
                 unsigned int index;
             public:
                 K first;
                 V second;
-                explicit iterator(ft_map<K, V> &target, unsigned int index);
+                explicit iterator(ft_map<K, V, Compare> &target, unsigned int index);
 
                 iterator &operator++();
                 iterator &operator--();
@@ -56,14 +44,49 @@ class ft_map {
                 bool operator==(ft_map::iterator &target);
                 bool operator!=(ft_map::iterator &target);
         };
+        //CONSTRUCTOR
+        ft_map();
+        ft_map(ft_map::iterator begin, ft_map::iterator end);
+        ft_map(const ft_map &target);
+        ft_map &operator=(const ft_map &target);
 
+        //DESTRUCTOR
+        ~ft_map();
+
+        //ITERATORS
         ft_map::iterator begin();
         ft_map::iterator end();
         ft_map::iterator rbegin();
         ft_map::iterator rend();
+
+        //CAPACITY
+        bool empty();
+        size_type size();
+        size_type max_size();
+
+        
+        //ELEMENT ACCESS
+        mapped_type &operator[](const key_type &target);
+
+        //MODIFIERS
+        void swap(ft_map &target);
+        void clear();
+
+        //OBSERVERS
+        //key_compare key_comp() const;
+        //value_compare value_comp() const;
+
+        //OPERATIONS
         ft_map::iterator find (const key_type& k);
+        //const_iterator find (const key_type& k) const;
+        size_type count(const key_type& k) const;
         ft_map::iterator lower_bound(const key_type& k);
+        //const_iterator lower_bound (const key_type& k) const;
         ft_map::iterator upper_bound (const key_type& k);
+        //const_iterator upper_bound (const key_type& k) const;
+        std::pair<ft_map::iterator,ft_map::iterator> equal_range(const key_type& k);
+        //std::pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
+        
 };
 
 //****************************************
@@ -72,14 +95,38 @@ class ft_map {
 //****************************************
 //****************************************
 
-template<class K, class V>
-ft_map<K, V>::ft_map() : max(100)
+template<class K, class V, class Compare>
+ft_map<K, V, Compare>::ft_map() : max(100)
 {
     this->node = NULL;
 }
 
-template<class K, class V>
-ft_map<K, V>::ft_map(const ft_map &target)  : max(100)
+template<class K, class V, class Compare>
+ft_map<K, V, Compare>::ft_map(ft_map<K, V, Compare>::iterator begin, ft_map<K, V, Compare>::iterator end) : max(100)
+{
+    ft_map_node<K, V> *save;
+
+    save = NULL;
+    if (begin.target != end.target)
+        throw std::invalid_argument("Les poiteurs ciblent des cibles differentes");
+    while (begin != end)
+    {
+        if (this->node == NULL)
+        {
+            this->node = new(ft_mpa_node(begin.first, begin.second));
+            save = this->node;
+        }
+        else
+        {
+            this->node->setNext(new(ft_mpa_node(begin.first, begin.second)));
+            this->node = this->node->getNext();
+        }
+    }
+    this->node = save;
+}
+
+template<class K, class V, class Compare>
+ft_map<K, V, Compare>::ft_map(const ft_map &target)  : max(100)
 {
     ft_map_node<K, V> *save_me;
     ft_map_node<K, V> *save_target;
@@ -104,34 +151,67 @@ ft_map<K, V>::ft_map(const ft_map &target)  : max(100)
     target.node = save_target;
 }
 
-template<class K, class V>
-ft_map<K, V> &ft_map<K, V>::operator=(const ft_map &target)
+template<class K, class V, class Compare>
+ft_map<K, V, Compare> &ft_map<K, V, Compare>::operator=(const ft_map &target)
 {
     del();
     this->node = target.node;
     return (*this);
 }
 
-template<class K, class V>
-ft_map<K, V>::~ft_map()
+//****************************************
+//****************************************
+//DESTRUCTOR
+//****************************************
+//****************************************
+
+template<class K, class V, class Compare>
+ft_map<K, V, Compare>::~ft_map()
 {
     del();
 }
 
 //****************************************
 //****************************************
-//FUNCTIONS
+//ITERATORS
 //****************************************
 //****************************************
 
-template<class K, class V>
-bool ft_map<K, V>::empty()
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::iterator ft_map<K, V, Compare>::begin()
+{
+    return (ft_map<K, V, Compare>::iterator(*this, 0));
+}
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::iterator ft_map<K, V, Compare>::end()
+{
+    return (ft_map<K, V, Compare>::iterator(*this, size()));
+}
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::iterator ft_map<K, V, Compare>::rbegin()
+{
+    return (ft_map<K, V, Compare>::iterator(*this, size()));
+}
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::iterator ft_map<K, V, Compare>::rend()
+{
+    return (ft_map<K, V, Compare>::iterator(*this, 0));
+}
+
+//****************************************
+//****************************************
+//CAPACITY
+//****************************************
+//****************************************
+
+template<class K, class V, class Compare>
+bool ft_map<K, V, Compare>::empty()
 {
     return (this->node == NULL ? (true) : (false));
 }
 
-template<class K, class V>
-typename ft_map<K, V>::size_type ft_map<K, V>::size()
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::size_type ft_map<K, V, Compare>::size()
 {
     unsigned int i;
     ft_map_node<K, V> *tmp;
@@ -147,14 +227,34 @@ typename ft_map<K, V>::size_type ft_map<K, V>::size()
     return (i);
 }
 
-template<class K, class V>
-typename ft_map<K, V>::size_type ft_map<K, V>::max_size()
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::size_type ft_map<K, V, Compare>::max_size()
 {
     return (this->max);
 }
 
-template<class K, class V>
-void ft_map<K, V>::swap(ft_map &target)
+//****************************************
+//****************************************
+//ELEMENT ACCESS
+//****************************************
+//****************************************
+
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::mapped_type &ft_map<K, V, Compare>::operator[](const key_type &target)
+{
+    if(find_key(target) == NULL)
+        add(target);
+    return(find_key(target)->getValueR());
+}
+
+//****************************************
+//****************************************
+//MODIFIERS
+//****************************************
+//****************************************
+
+template<class K, class V, class Compare>
+void ft_map<K, V, Compare>::swap(ft_map &target)
 {
     ft_map_node<K, V> *tmp;
     tmp = this->node;
@@ -162,14 +262,40 @@ void ft_map<K, V>::swap(ft_map &target)
     target.node = tmp;
 }
 
-template<class K, class V>
-void ft_map<K, V>::clear()
+template<class K, class V, class Compare>
+void ft_map<K, V, Compare>::clear()
 {
     del();
 }
 
-template<class K, class V>
-typename ft_map<K, V>::size_type ft_map<K, V>::count(const key_type &k) const
+//****************************************
+//****************************************
+//OPERATIONS
+//****************************************
+//****************************************
+
+
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::iterator ft_map<K, V, Compare>::find(const key_type& k)
+{
+    ft_map_node<K, V> *save;
+    unsigned int i;
+
+    i = 0;
+    save = this->node;
+    while(this->node != NULL)
+    {
+        if (this->node->getKey() == k)
+            break;
+        this->node = this->node->getNext();
+        ++i;
+    }
+    this->node = save;
+    return (ft_map<K, V, Compare>::iterator(*this, i));
+}
+
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::size_type ft_map<K, V, Compare>::count(const key_type &k) const
 {
     ft_map_node<K, V> *tmp;
 
@@ -183,34 +309,8 @@ typename ft_map<K, V>::size_type ft_map<K, V>::count(const key_type &k) const
     return(0);
 }
 
-//****************************************
-//****************************************
-//BEGIN END LOWER UPPER FIND
-//****************************************
-//****************************************
-
-template<class K, class V>
-typename ft_map<K, V>::iterator ft_map<K, V>::begin()
-{
-    return (ft_map<K, V>::iterator(*this, 0));
-}
-template<class K, class V>
-typename ft_map<K, V>::iterator ft_map<K, V>::end()
-{
-    return (ft_map<K, V>::iterator(*this, size()));
-}
-template<class K, class V>
-typename ft_map<K, V>::iterator ft_map<K, V>::rbegin()
-{
-    return (ft_map<K, V>::iterator(*this, size()));
-}
-template<class K, class V>
-typename ft_map<K, V>::iterator ft_map<K, V>::rend()
-{
-    return (ft_map<K, V>::iterator(*this, 0));
-}
-template<class K, class V>
-typename ft_map<K, V>::iterator ft_map<K, V>::find(const key_type& k)
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::iterator ft_map<K, V, Compare>::lower_bound(const key_type& k)
 {
     ft_map_node<K, V> *save;
     unsigned int i;
@@ -225,28 +325,11 @@ typename ft_map<K, V>::iterator ft_map<K, V>::find(const key_type& k)
         ++i;
     }
     this->node = save;
-    return (ft_map<K, V>::iterator(*this, i));
+    return (ft_map<K, V, Compare>::iterator(*this, i));
 }
-template<class K, class V>
-typename ft_map<K, V>::iterator ft_map<K, V>::lower_bound(const key_type& k)
-{
-    ft_map_node<K, V> *save;
-    unsigned int i;
 
-    i = 0;
-    save = this->node;
-    while(this->node != NULL)
-    {
-        if (this->node->getKey() == k)
-            break;
-        this->node = this->node->getNext();
-        ++i;
-    }
-    this->node = save;
-    return (ft_map<K, V>::iterator(*this, i));
-}
-template<class K, class V>
-typename ft_map<K, V>::iterator ft_map<K, V>::upper_bound (const key_type& k)
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::iterator ft_map<K, V, Compare>::upper_bound (const key_type& k)
 {
     ft_map_node<K, V> *save;
     unsigned int i;
@@ -262,22 +345,8 @@ typename ft_map<K, V>::iterator ft_map<K, V>::upper_bound (const key_type& k)
     }
     this->node = save;
     if (i != size())
-        return (ft_map<K, V>::iterator(*this, i + 1));
-    return (ft_map<K, V>::iterator(*this, i));
-}
-
-//****************************************
-//****************************************
-//OPERATORS
-//****************************************
-//****************************************
-
-template<class K, class V>
-typename ft_map<K, V>::mapped_type &ft_map<K, V>::operator[](const key_type &target)
-{
-    if(find_key(target) == NULL)
-        add(target);
-    return(find_key(target)->getValueR());
+        return (ft_map<K, V, Compare>::iterator(*this, i + 1));
+    return (ft_map<K, V, Compare>::iterator(*this, i));
 }
 
 //****************************************
@@ -286,8 +355,8 @@ typename ft_map<K, V>::mapped_type &ft_map<K, V>::operator[](const key_type &tar
 //****************************************
 //****************************************
 
-template<class K, class V>
-void ft_map<K, V>::del()
+template<class K, class V, class Compare>
+void ft_map<K, V, Compare>::del()
 {
     ft_map_node<K, V> *tmp;
 
@@ -301,8 +370,8 @@ void ft_map<K, V>::del()
     this->node = NULL;
 }
 
-template<class K, class V>
-void ft_map<K, V>::add(K key)
+template<class K, class V, class Compare>
+void ft_map<K, V, Compare>::add(K key)
 {
     int stop = 0;
     ft_map_node<K, V> *save;
@@ -312,7 +381,7 @@ void ft_map<K, V>::add(K key)
     last = NULL;
     while (this->node != NULL && stop == 0)
     {
-        if (this->node->getKey() > key)
+        if (cmp(this->node->getKey(), key))
             stop = 1;
         else
         {
@@ -334,8 +403,8 @@ void ft_map<K, V>::add(K key)
     }
 }
 
-template<class K, class V>
-void ft_map<K, V>::add(K key, V value)
+template<class K, class V, class Compare>
+void ft_map<K, V, Compare>::add(K key, V value)
 {
     int stop = 0;
     ft_map_node<K, V> *save;
@@ -345,7 +414,7 @@ void ft_map<K, V>::add(K key, V value)
     last = NULL;
     while (this->node != NULL && stop == 0)
     {
-        if (this->node->getKey() > key)
+        if (cmp(this->node->getKey(), key))
             stop = 1;
         else
         {
@@ -367,8 +436,8 @@ void ft_map<K, V>::add(K key, V value)
     }
 }
 
-template<class K, class V>
-ft_map_node<K, V> *ft_map<K, V>::find_key(K key)
+template<class K, class V, class Compare>
+ft_map_node<K, V> *ft_map<K, V, Compare>::find_key(K key)
 {
     ft_map_node<K, V> *save;
     ft_map_node<K, V> *tmp;
@@ -385,8 +454,8 @@ ft_map_node<K, V> *ft_map<K, V>::find_key(K key)
     return (tmp);
 }
 
-template<class K, class V>
-ft_map_node<K, V> *ft_map<K, V>::get(unsigned int i)
+template<class K, class V, class Compare>
+ft_map_node<K, V> *ft_map<K, V, Compare>::get(unsigned int i)
 {
     ft_map_node<K, V> *save;
     ft_map_node<K, V> *tmp;
@@ -413,8 +482,8 @@ ft_map_node<K, V> *ft_map<K, V>::get(unsigned int i)
 //****************************************
 //****************************************
 
-template<class K, class V>
-ft_map<K, V>::iterator::iterator(ft_map<K, V> &target, unsigned int index) : target(target)
+template<class K, class V, class Compare>
+ft_map<K, V, Compare>::iterator::iterator(ft_map<K, V, Compare> &target, unsigned int index) : target(target)
 {
     this->index = index;
     if (this->target.get(this->index) != NULL)
@@ -423,8 +492,8 @@ ft_map<K, V>::iterator::iterator(ft_map<K, V> &target, unsigned int index) : tar
         this->second = this->target.get(this->index)->getValue();
 }
 
-template<class K, class V>
-typename ft_map<K, V>::iterator &ft_map<K, V>::iterator::operator++()
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::iterator &ft_map<K, V, Compare>::iterator::operator++()
 {
     this->index +=1;
     if (this->target.get(this->index) != NULL)
@@ -433,8 +502,8 @@ typename ft_map<K, V>::iterator &ft_map<K, V>::iterator::operator++()
         this->second = this->target.get(this->index)->getValue();
     return(*this);
 }
-template<class K, class V>
-typename ft_map<K, V>::iterator &ft_map<K, V>::iterator::operator--()
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::iterator &ft_map<K, V, Compare>::iterator::operator--()
 {
     this->index -= 1;
     if (this->target.get(this->index) != NULL)
@@ -443,8 +512,8 @@ typename ft_map<K, V>::iterator &ft_map<K, V>::iterator::operator--()
         this->second = this->target.get(this->index)->getValue();
     return (*this);
 }
-template<class K, class V>
-typename ft_map<K, V>::iterator &ft_map<K, V>::iterator::operator++(int i)
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::iterator &ft_map<K, V, Compare>::iterator::operator++(int i)
 {
     (void)i;
     iterator    tmp(*this);
@@ -455,8 +524,8 @@ typename ft_map<K, V>::iterator &ft_map<K, V>::iterator::operator++(int i)
         this->second = this->target.get(this->index)->getValue();
     return tmp;
 }
-template<class K, class V>
-typename ft_map<K, V>::iterator &ft_map<K, V>::iterator::operator--(int i)
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::iterator &ft_map<K, V, Compare>::iterator::operator--(int i)
 {
     (void)i;
     iterator    tmp(*this);
@@ -467,13 +536,13 @@ typename ft_map<K, V>::iterator &ft_map<K, V>::iterator::operator--(int i)
         this->second = this->target.get(this->index)->getValue();
     return tmp;
 }
-template<class K, class V>
-bool ft_map<K, V>::iterator::operator==(ft_map::iterator &target)
+template<class K, class V, class Compare>
+bool ft_map<K, V, Compare>::iterator::operator==(ft_map::iterator &target)
 {
     return(this->index == target.index);
 }
-template<class K, class V>
-bool ft_map<K, V>::iterator::operator!=(ft_map::iterator &target)
+template<class K, class V, class Compare>
+bool ft_map<K, V, Compare>::iterator::operator!=(ft_map::iterator &target)
 {
     return(this->index != target.index);
 }
