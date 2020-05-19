@@ -102,6 +102,10 @@ int     main()
         ++find_begin;
     }
 
+    std::cout << "######## ERASE ########" << std::endl;
+    map3->erase('e');
+    ft_map3->erase('e');
+
     std::cout << "######## LOWER_BOUND ########" << std::endl;
     ft_map<char, std::string>::iterator lower_begin = ft_map3->lower_bound('d');
     ft_map<char, std::string>::iterator lower_end = ft_map3->end();

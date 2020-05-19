@@ -85,8 +85,8 @@ class ft_map {
         ft_map::iterator insert(ft_map<K, V, Compare>::iterator position, const value_type& val);
         void insert(ft_map<K, V, Compare>::iterator first, ft_map<K, V, Compare>::iterator last);
         void erase(ft_map<K, V, Compare>::iterator position);
-        //size_type erase(const key_type& k);
-        //void erase(iterator first, iterator last);
+        size_type erase(const key_type& k);
+        void erase(ft_map<K, V, Compare>::iterator first, ft_map<K, V, Compare>::iterator last);
         void swap(ft_map &target);
         void clear();
 
@@ -327,8 +327,28 @@ void ft_map<K, V, Compare>::insert(ft_map<K, V, Compare>::iterator first, ft_map
 template<class K, class V, class Compare>
 void ft_map<K, V, Compare>::erase(ft_map<K, V, Compare>::iterator position)
 {
-    if (find_key(position.first) != NULL)
-        supp(position.first);
+    erase(position.first);
+}
+
+template<class K, class V, class Compare>
+typename ft_map<K, V, Compare>::size_type ft_map<K, V, Compare>::erase(const key_type& k)
+{
+    if (find_key(k) != NULL)
+    {
+        supp(k);
+        return (1);
+    }
+    return (0);
+}
+
+template<class K, class V, class Compare>
+void ft_map<K, V, Compare>::erase(ft_map<K, V, Compare>::iterator first, ft_map<K, V, Compare>::iterator last)
+{
+    while (first != last)
+    {
+        erase(first.first);
+        ++first;
+    }
 }
 
 template<class K, class V, class Compare>
