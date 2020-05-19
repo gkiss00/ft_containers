@@ -75,13 +75,13 @@ int     main()
     ft_map3->insert(begin, std::pair<char, std::string>('p', "je suis p"));
 
     std::cout << "######## R-ITERATOR ########" << std::endl;
-    ft_map<char, std::string>::iterator rbegin = ft_map3->rbegin();
-    ft_map<char, std::string>::iterator rend = ft_map3->rend();
+    ft_map<char, std::string>::reverse_iterator rbegin = ft_map3->rbegin();
+    ft_map<char, std::string>::reverse_iterator rend = ft_map3->rend();
 
-    while(rend != rbegin)
+    while(rbegin != rend)
     {
-        std::cout << rend.first << " " << rend.second << std::endl;
-        ++rend;
+        std::cout << rbegin.first << " " << rbegin.second << std::endl;
+        ++rbegin;
     }
 
     std::cout << "######## ERASE ########" << std::endl;
