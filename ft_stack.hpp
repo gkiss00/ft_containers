@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <iostream>
 
+namespace ft {
 
 template<class T>
 class ft_stack {
@@ -298,6 +299,8 @@ template<class T>
 bool ft_stack<T>::operator>=(ft_stack<T> &target)
 {
     return (this->operator>(target) || this->operator==(target));
+}
+
 }
 
 #endif

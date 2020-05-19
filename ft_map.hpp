@@ -8,6 +8,8 @@
 #include <functional>
 #include <memory>
 
+namespace ft {
+
 template<class K, class V, class Compare = std::less<K>, class Alloc = std::allocator<ft_map_node<K, V> > >
 class ft_map {
     public:
@@ -1387,5 +1389,7 @@ template<class K, class V, class Compare, class Alloc>
 bool ft_map<K, V, Compare, Alloc>::const_reverse_iterator::operator!=(ft_map::const_reverse_iterator &target)
 {
     return(this->index != target.index);
+}
+
 }
 #endif

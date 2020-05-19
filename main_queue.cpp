@@ -12,8 +12,8 @@ int     main()
     std::queue<int> *queue1 = new std::queue<int>();
     std::queue<int> *queue2 = new std::queue<int>();
 
-    ft_queue<int> *ft_queue1 = new ft_queue<int>();
-    ft_queue<int> *ft_queue2 = new ft_queue<int>();
+    ft::ft_queue<int> *ft_queue1 = new ft::ft_queue<int>();
+    ft::ft_queue<int> *ft_queue2 = new ft::ft_queue<int>();
 
     std::cout << "########PUSH########" << std::endl;
     

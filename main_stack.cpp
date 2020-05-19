@@ -12,8 +12,8 @@ int     main()
     std::stack<int> *stack1 = new std::stack<int>();
     std::stack<int> *stack2 = new std::stack<int>();
 
-    ft_stack<int> *ft_stack1 = new ft_stack<int>();
-    ft_stack<int> *ft_stack2 = new ft_stack<int>();
+    ft::ft_stack<int> *ft_stack1 = new ft::ft_stack<int>();
+    ft::ft_stack<int> *ft_stack2 = new ft::ft_stack<int>();
 
     std::cout << "######## PUSH ########" << std::endl;
     
