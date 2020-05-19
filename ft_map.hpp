@@ -33,10 +33,14 @@ class ft_map {
             private:
                 ft_map<K, V, Compare, Alloc> &target;
                 unsigned int index;
+                iterator();
             public:
                 K first;
                 V second;
                 explicit iterator(ft_map<K, V, Compare, Alloc> &target, unsigned int index);
+                iterator(const iterator &target);
+                iterator &operator=(ft_map<K, V, Compare, Alloc>::iterator &target);
+                ~iterator();
 
                 iterator &operator++();
                 iterator &operator--();
@@ -49,10 +53,14 @@ class ft_map {
             private:
                 const ft_map<K, V, Compare, Alloc> &target;
                 unsigned int index;
+                const_iterator();
             public:
                 K first;
                 V second;
-                explicit const_iterator(ft_map<K, V, Compare, Alloc> &target, unsigned int index);
+                const_iterator(ft_map<K, V, Compare, Alloc> &target, unsigned int index);
+                const_iterator(const ft_map<K, V, Compare, Alloc>::const_iterator &target);
+                const_iterator &operator=(ft_map<K, V, Compare, Alloc>::const_iterator &target);
+                ~const_iterator();
 
                 const_iterator &operator++();
                 const_iterator &operator--();
@@ -65,10 +73,14 @@ class ft_map {
             private:
                 ft_map<K, V, Compare, Alloc> &target;
                 unsigned int index;
+                reverse_iterator();
             public:
                 K first;
                 V second;
-                explicit reverse_iterator(ft_map<K, V, Compare, Alloc> &target, unsigned int index);
+                reverse_iterator(ft_map<K, V, Compare, Alloc> &target, unsigned int index);
+                reverse_iterator(const ft_map<K, V, Compare, Alloc>::reverse_iterator &target);
+                reverse_iterator &operator=(ft_map<K, V, Compare, Alloc>::reverse_iterator &target);
+                ~reverse_iterator();
 
                 reverse_iterator &operator++();
                 reverse_iterator &operator--();
@@ -81,10 +93,14 @@ class ft_map {
             private:
                 const ft_map<K, V, Compare, Alloc> &target;
                 unsigned int index;
+                const_reverse_iterator();
             public:
                 K first;
                 V second;
-                explicit const_reverse_iterator(ft_map<K, V, Compare, Alloc> &target, unsigned int index);
+                const_reverse_iterator(ft_map<K, V, Compare, Alloc> &target, unsigned int index);
+                const_reverse_iterator(const ft_map<K, V, Compare, Alloc>::const_reverse_iterator &target);
+                const_reverse_iterator &operator=(ft_map<K, V, Compare, Alloc>::const_reverse_iterator &target);
+                ~const_reverse_iterator();
 
                 const_reverse_iterator &operator++();
                 const_reverse_iterator &operator--();
@@ -848,6 +864,12 @@ int ft_map<K, V, Compare, Alloc>::get_index(K target)
 //****************************************
 
 template<class K, class V, class Compare, class Alloc>
+ft_map<K, V, Compare, Alloc>::iterator::iterator()
+{
+    this->index = 0;
+}
+
+template<class K, class V, class Compare, class Alloc>
 ft_map<K, V, Compare, Alloc>::iterator::iterator(ft_map<K, V, Compare, Alloc> &target, unsigned int index) : target(target)
 {
     this->index = index;
@@ -856,6 +878,36 @@ ft_map<K, V, Compare, Alloc>::iterator::iterator(ft_map<K, V, Compare, Alloc> &t
         this->first = this->target.get(this->index)->getKey();
         this->second = this->target.get(this->index)->getValue();
     }
+}
+
+template<class K, class V, class Compare, class Alloc>
+ft_map<K, V, Compare, Alloc>::iterator::iterator(const ft_map<K, V, Compare, Alloc>::iterator &target) : target(target.target)
+{
+    this->index = target.index;
+    if (this->target.get(this->index) != NULL)
+    {
+        this->first = this->target.get(this->index)->getKey();
+        this->second = this->target.get(this->index)->getValue();
+    }
+}
+
+template<class K, class V, class Compare, class Alloc>
+typename ft_map<K, V, Compare, Alloc>::iterator &ft_map<K, V, Compare, Alloc>::iterator::operator=(ft_map<K, V, Compare, Alloc>::iterator &target)
+{
+    this->index = target.index;
+    this->target = target.target;
+    if (this->target.get(this->index) != NULL)
+    {
+        this->first = this->target.get(this->index)->getKey();
+        this->second = this->target.get(this->index)->getValue();
+    }
+    return (*this);
+}
+
+template<class K, class V, class Compare, class Alloc>
+ft_map<K, V, Compare, Alloc>::iterator::~iterator()
+{
+    this->index = 0;
 }
 
 template<class K, class V, class Compare, class Alloc>
@@ -924,6 +976,12 @@ bool ft_map<K, V, Compare, Alloc>::iterator::operator!=(ft_map::iterator &target
 //****************************************
 
 template<class K, class V, class Compare, class Alloc>
+ft_map<K, V, Compare, Alloc>::const_iterator::const_iterator()
+{
+    this->index = 0;
+}
+
+template<class K, class V, class Compare, class Alloc>
 ft_map<K, V, Compare, Alloc>::const_iterator::const_iterator(ft_map<K, V, Compare, Alloc> &target, unsigned int index) : target(target)
 {
     this->index = index;
@@ -932,6 +990,36 @@ ft_map<K, V, Compare, Alloc>::const_iterator::const_iterator(ft_map<K, V, Compar
         this->first = this->target.get(this->index)->getKey();
         this->second = this->target.get(this->index)->getValue();
     }
+}
+
+template<class K, class V, class Compare, class Alloc>
+ft_map<K, V, Compare, Alloc>::const_iterator::const_iterator(const ft_map<K, V, Compare, Alloc>::const_iterator &target) : target(target.target)
+{
+    this->index = target.index;
+    if (this->target.get(this->index) != NULL)
+    {
+        this->first = this->target.get(this->index)->getKey();
+        this->second = this->target.get(this->index)->getValue();
+    }
+}
+
+template<class K, class V, class Compare, class Alloc>
+typename ft_map<K, V, Compare, Alloc>::const_iterator &ft_map<K, V, Compare, Alloc>::const_iterator::operator=(ft_map<K, V, Compare, Alloc>::const_iterator &target)
+{
+    this->index = target.index;
+    this->target = target.target;
+    if (this->target.get(this->index) != NULL)
+    {
+        this->first = this->target.get(this->index)->getKey();
+        this->second = this->target.get(this->index)->getValue();
+    }
+    return (*this);
+}
+
+template<class K, class V, class Compare, class Alloc>
+ft_map<K, V, Compare, Alloc>::const_iterator::~const_iterator()
+{
+    
 }
 
 template<class K, class V, class Compare, class Alloc>
@@ -1000,6 +1088,12 @@ bool ft_map<K, V, Compare, Alloc>::const_iterator::operator!=(ft_map::const_iter
 //****************************************
 
 template<class K, class V, class Compare, class Alloc>
+ft_map<K, V, Compare, Alloc>::reverse_iterator::reverse_iterator()
+{
+    this->index = 0;
+}
+
+template<class K, class V, class Compare, class Alloc>
 ft_map<K, V, Compare, Alloc>::reverse_iterator::reverse_iterator(ft_map<K, V, Compare, Alloc> &target, unsigned int index) : target(target)
 {
     this->index = index;
@@ -1008,6 +1102,37 @@ ft_map<K, V, Compare, Alloc>::reverse_iterator::reverse_iterator(ft_map<K, V, Co
         this->first = this->target.get(this->target.size() - 1 - this->index)->getKey();
         this->second = this->target.get(this->target.size() - 1 - this->index)->getValue();
     }
+}
+
+template<class K, class V, class Compare, class Alloc>
+ft_map<K, V, Compare, Alloc>::reverse_iterator::reverse_iterator(const ft_map<K, V, Compare, Alloc>::reverse_iterator &target) : target(target.target)
+{
+    this->index = target.index;
+    this->target = target.target;
+    if (this->target.get(this->index) != NULL)
+    {
+        this->first = this->target.get(this->index)->getKey();
+        this->second = this->target.get(this->index)->getValue();
+    }
+}
+
+template<class K, class V, class Compare, class Alloc>
+typename ft_map<K, V, Compare, Alloc>::reverse_iterator &ft_map<K, V, Compare, Alloc>::reverse_iterator::operator=(ft_map<K, V, Compare, Alloc>::reverse_iterator &target)
+{
+    this->index = target.index;
+    this->target = target.target;
+    if (this->target.get(this->index) != NULL)
+    {
+        this->first = this->target.get(this->index)->getKey();
+        this->second = this->target.get(this->index)->getValue();
+    }
+    return (*this);
+}
+
+template<class K, class V, class Compare, class Alloc>
+ft_map<K, V, Compare, Alloc>::reverse_iterator::~reverse_iterator()
+{
+    
 }
 
 template<class K, class V, class Compare, class Alloc>
@@ -1076,6 +1201,12 @@ bool ft_map<K, V, Compare, Alloc>::reverse_iterator::operator!=(ft_map::reverse_
 //****************************************
 
 template<class K, class V, class Compare, class Alloc>
+ft_map<K, V, Compare, Alloc>::const_reverse_iterator::const_reverse_iterator()
+{
+    this->index = 0;
+}
+
+template<class K, class V, class Compare, class Alloc>
 ft_map<K, V, Compare, Alloc>::const_reverse_iterator::const_reverse_iterator(ft_map<K, V, Compare, Alloc> &target, unsigned int index) : target(target)
 {
     this->index = index;
@@ -1084,6 +1215,37 @@ ft_map<K, V, Compare, Alloc>::const_reverse_iterator::const_reverse_iterator(ft_
         this->first = this->target.get(this->target.size() - 1 - this->index)->getKey();
         this->second = this->target.get(this->target.size() - 1 - this->index)->getValue();
     }
+}
+
+template<class K, class V, class Compare, class Alloc>
+ft_map<K, V, Compare, Alloc>::const_reverse_iterator::const_reverse_iterator(const ft_map<K, V, Compare, Alloc>::const_reverse_iterator &target) : target(target.target)
+{
+    this->index = target.index;
+    this->target = target.target;
+    if (this->target.get(this->index) != NULL)
+    {
+        this->first = this->target.get(this->index)->getKey();
+        this->second = this->target.get(this->index)->getValue();
+    }
+}
+
+template<class K, class V, class Compare, class Alloc>
+typename ft_map<K, V, Compare, Alloc>::const_reverse_iterator &ft_map<K, V, Compare, Alloc>::const_reverse_iterator::operator=(ft_map<K, V, Compare, Alloc>::const_reverse_iterator &target)
+{
+    this->index = target.index;
+    this->target = target.target;
+    if (this->target.get(this->index) != NULL)
+    {
+        this->first = this->target.get(this->index)->getKey();
+        this->second = this->target.get(this->index)->getValue();
+    }
+    return (*this);
+}
+
+template<class K, class V, class Compare, class Alloc>
+ft_map<K, V, Compare, Alloc>::const_reverse_iterator::~const_reverse_iterator()
+{
+    
 }
 
 template<class K, class V, class Compare, class Alloc>
