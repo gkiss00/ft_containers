@@ -13,6 +13,7 @@ class ft_stack {
     public:
         typedef T value_type;
         typedef unsigned int size_type;
+        //typedef Container container_type;
     private:
         ft_node<T> *node;
     public:
@@ -21,8 +22,8 @@ class ft_stack {
         ft_stack &operator=(const ft_stack &target);
         ~ft_stack();
 
-        bool empty();
-        size_type size();
+        bool empty() const;
+        size_type size() const;
         value_type top();
         void push(T target);
         void pop();
@@ -109,25 +110,24 @@ ft_stack<T>::~ft_stack()
 //****************************************
 
 template<class T>
-bool ft_stack<T>::empty()
+bool ft_stack<T>::empty() const
 {
     return(this->node == NULL ? (true) : (false));
 }
 
 template<class T>
-typename ft_stack<T>::size_type ft_stack<T>::size()
+typename ft_stack<T>::size_type ft_stack<T>::size() const
 {
     unsigned int i;
     ft_node<T> *tmp;
 
     i = 0;
     tmp = this->node;
-    while(this->node != NULL)
+    while(tmp != NULL)
     {
         ++i;
-        this->node = this->node->getNext();
+        tmp = tmp->getNext();
     }
-    this->node = tmp;
     return (i);
 }
 

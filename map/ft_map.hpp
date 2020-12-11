@@ -1,7 +1,7 @@
 #ifndef FT_MAP
 #define FT_MAP
 
-#include "ft_map_node.hpp"
+#include "./../utils/ft_map_node.hpp"
 #include <stdio.h>
 #include <iostream>
 #include <utility>
@@ -127,7 +127,7 @@ class ft_map {
         Compare cmp;
         Alloc alloc;
         ft_map_node<K, V> *node;
-        const unsigned int max;
+        const long long unsigned int max;
 
         void add(K key);
         void supp(K key);
@@ -189,7 +189,7 @@ class ft_map {
         iterator upper_bound (const key_type& k);
         const_iterator upper_bound(const key_type& k) const;
         std::pair<ft_map::iterator,ft_map::iterator> equal_range(const key_type& k);
-        std::pair<const_iterator,const_iterator> equal_range (const key_type& k) const;
+        std::pair<const_iterator,const_iterator> equal_range(const key_type& k) const;
         
 };
 
@@ -200,19 +200,18 @@ class ft_map {
 //****************************************
 
 template<class K, class V, class Compare, class Alloc>
-ft_map<K, V, Compare, Alloc>::ft_map() : max(100)
+ft_map<K, V, Compare, Alloc>::ft_map() : max(2000000000)
 {
     this->node = NULL;
 }
 
 template<class K, class V, class Compare, class Alloc>
-ft_map<K, V, Compare, Alloc>::ft_map(ft_map<K, V, Compare, Alloc>::iterator begin, ft_map<K, V, Compare, Alloc>::iterator end) : max(100)
+ft_map<K, V, Compare, Alloc>::ft_map(ft_map<K, V, Compare, Alloc>::iterator begin, ft_map<K, V, Compare, Alloc>::iterator end) : max(2000000000)
 {
     ft_map_node<K, V> *save;
 
+    this->node = NULL;
     save = NULL;
-    if (begin.target != end.target)
-        throw std::invalid_argument("Les poiteurs ciblent des cibles differentes");
     while (begin != end)
     {
         if (this->node == NULL)
@@ -225,34 +224,34 @@ ft_map<K, V, Compare, Alloc>::ft_map(ft_map<K, V, Compare, Alloc>::iterator begi
             this->node->setNext(new ft_map_node<K, V>(begin.first, begin.second));
             this->node = this->node->getNext();
         }
+        ++begin;
     }
     this->node = save;
 }
 
 template<class K, class V, class Compare, class Alloc>
-ft_map<K, V, Compare, Alloc>::ft_map(const ft_map &target)  : max(100)
+ft_map<K, V, Compare, Alloc>::ft_map(const ft_map &target)  : max(2000000000)
 {
     ft_map_node<K, V> *save_me;
-    ft_map_node<K, V> *save_target;
+    ft_map_node<K, V> *tmp;
 
-    save_target = target.node;
+    tmp = target.node;
     this->node = NULL;
-    while(target.node != NULL)
+    while(tmp != NULL)
     {
         if (this->node == NULL)
         {
-            this->node = new ft_map_node<K, V>(target.node);
+            this->node = new ft_map_node<K, V>(*tmp);
             save_me = this->node;
         }
         else
         {
-            this->node->setNext(new ft_map_node<K, V>(target.node));
+            this->node->setNext(new ft_map_node<K, V>(*tmp));
             this->node = this->node->getNext();
         }
-        target.node = target.node->getNext();
+        tmp = tmp->getNext();
     }
     this->node = save_me;
-    target.node = save_target;
 }
 
 template<class K, class V, class Compare, class Alloc>
@@ -391,7 +390,7 @@ std::pair<typename ft_map<K, V, Compare, Alloc>::iterator,bool> ft_map<K, V, Com
     tmp = NULL;
     if((tmp = find_key(val.first)) != NULL)
     {
-        tmp->setValue(val.second);
+        //tmp->setValue(val.second);
         return (std::pair<ft_map<K, V, Compare, Alloc>::iterator, bool>(ft_map<K, V, Compare, Alloc>::iterator(*this, get_index(val.first)), false));
     }
     else
@@ -410,7 +409,7 @@ typename ft_map<K, V, Compare, Alloc>::iterator ft_map<K, V, Compare, Alloc>::in
     tmp = NULL;
     if((tmp = find_key(val.first)) != NULL)
     {
-        tmp->setValue(val.second);
+        //tmp->setValue(val.second);
         return (ft_map<K, V, Compare, Alloc>::iterator(*this, get_index(val.first)));
     }
     else
@@ -430,7 +429,8 @@ void ft_map<K, V, Compare, Alloc>::insert(ft_map<K, V, Compare, Alloc>::iterator
     {
         tmp = NULL;
         if((tmp = find_key(first.first)) != NULL)
-            tmp->setValue(first.second);
+            std::cout << "";
+            //tmp->setValue(first.second);
         else
             add(first.first, first.second);
         ++first;
@@ -640,33 +640,33 @@ typename ft_map<K, V, Compare, Alloc>::const_iterator ft_map<K, V, Compare, Allo
 template<class K, class V, class Compare, class Alloc>
 std::pair<typename ft_map<K, V, Compare, Alloc>::iterator, typename ft_map<K, V, Compare, Alloc>::iterator> ft_map<K, V, Compare, Alloc>::equal_range(const key_type& k)
 {
-    ft_map<K, V, Compare, Alloc>::iterator i1;
-    ft_map<K, V, Compare, Alloc>::iterator i2;
+    ft_map<K, V, Compare, Alloc>::iterator *i1;
+    ft_map<K, V, Compare, Alloc>::iterator *i2;
     if (get_index(k) != -1)
     {
-        i1 = ft_map<K, V, Compare, Alloc>::iterator(*this, get_index(k));
-        i2 = ft_map<K, V, Compare, Alloc>::iterator(*this, get_index(k) + 1);
-        return (std::pair<ft_map<K, V, Compare, Alloc>::iterator, ft_map<K, V, Compare, Alloc>::iterator>(i1, i2));
+        i1 = new ft_map<K, V, Compare, Alloc>::iterator(*this, get_index(k));
+        i2 = new ft_map<K, V, Compare, Alloc>::iterator(*this, get_index(k) + 1);
+        return (std::pair<ft_map<K, V, Compare, Alloc>::iterator, ft_map<K, V, Compare, Alloc>::iterator>(*i1, *i2));
     }
-    i1 = ft_map<K, V, Compare, Alloc>::iterator(*this, size());
-    i2 = ft_map<K, V, Compare, Alloc>::iterator(*this, size());
-    return (std::pair<ft_map<K, V, Compare, Alloc>::iterator, ft_map<K, V, Compare, Alloc>::iterator>(i1, i2));
+    i1 = new ft_map<K, V, Compare, Alloc>::iterator(*this, size());
+    i2 = new ft_map<K, V, Compare, Alloc>::iterator(*this, size());
+    return (std::pair<ft_map<K, V, Compare, Alloc>::iterator, ft_map<K, V, Compare, Alloc>::iterator>(*i1, *i2));
 }
 
 template<class K, class V, class Compare, class Alloc>
 std::pair<typename ft_map<K, V, Compare, Alloc>::const_iterator, typename ft_map<K, V, Compare, Alloc>::const_iterator> ft_map<K, V, Compare, Alloc>::equal_range(const key_type& k) const
 {
-    ft_map<K, V, Compare, Alloc>::const_iterator i1;
-    ft_map<K, V, Compare, Alloc>::const_iterator i2;
+    ft_map<K, V, Compare, Alloc>::const_iterator *i1;
+    ft_map<K, V, Compare, Alloc>::const_iterator *i2;
     if (get_index(k) != -1)
     {
-        i1 = ft_map<K, V, Compare, Alloc>::const_iterator(*this, get_index(k));
-        i2 = ft_map<K, V, Compare, Alloc>::iterator(*this, get_index(k) + 1);
-        return (std::pair<ft_map<K, V, Compare, Alloc>::const_iterator, ft_map<K, V, Compare, Alloc>::const_iterator>(i1, i2));
+        i1 = new ft_map<K, V, Compare, Alloc>::const_iterator(*this, get_index(k));
+        i2 = new ft_map<K, V, Compare, Alloc>::iterator(*this, get_index(k) + 1);
+        return (std::pair<ft_map<K, V, Compare, Alloc>::const_iterator, ft_map<K, V, Compare, Alloc>::const_iterator>(*i1, *i2));
     }
-    i1 = ft_map<K, V, Compare, Alloc>::const_iterator(*this, size());
-    i2 = ft_map<K, V, Compare, Alloc>::const_iterator(*this, size());
-    return (std::pair<ft_map<K, V, Compare, Alloc>::const_iterator, ft_map<K, V, Compare, Alloc>::const_iterator>(i1, i2));
+    i1 = new ft_map<K, V, Compare, Alloc>::const_iterator(*this, size());
+    i2 = new ft_map<K, V, Compare, Alloc>::const_iterator(*this, size());
+    return (std::pair<ft_map<K, V, Compare, Alloc>::const_iterator, ft_map<K, V, Compare, Alloc>::const_iterator>(*i1, *i2));
 }
 
 //****************************************
@@ -860,6 +860,7 @@ int ft_map<K, V, Compare, Alloc>::get_index(K target)
             return (i);
         }
         this->node = this->node->getNext();
+        ++i;
     }
     this->node = save;
     return (-1);

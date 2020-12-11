@@ -117,11 +117,10 @@ int     main()
     std::cout << "stack    :: >=   :: " << (*stack1 >= *stack2) << std::endl;
     std::cout << "ft_stack :: >=   :: " << (*ft_stack1 >= *ft_stack2) << std::endl;
 
-    /*
     std::cout << "######## CONSTRUCTOR BY COPY ########" << std::endl;
-    ft::ft_stack<int> *ft_stack_copy = new ft::ft_stack<int>(ft_stack2);
-    std::stack<int> *stack_copy = new std::stack<int>(stack2);
-
+    std::stack<int> *stack_copy = new std::stack<int>(*stack2);
+    ft::ft_stack<int> *ft_stack_copy = new ft::ft_stack<int>(*ft_stack2);
+    
     std::cout << "######## TOP ########" << std::endl;
     std::cout << "stack    :: top  :: " << stack2->top() << " " << stack_copy->top() << std::endl;
     std::cout << "ft_stack :: top  :: " << ft_stack2->top() << " " << ft_stack_copy->top() << std::endl;
@@ -135,6 +134,6 @@ int     main()
     std::cout << "ft_stack :: top  :: " << ft_stack2->top() << " " << ft_stack_copy->top() << std::endl;
 
     delete(ft_stack_copy);
-    */
     delete(ft_stack1);
+    delete(stack1);
 }

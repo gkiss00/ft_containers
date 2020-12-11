@@ -320,7 +320,6 @@ int     main()
     mit6 = mit6 + 1;
     mit6 = mit6 - 1;
 
-<<<<<<< HEAD
     std::cout << "--- m16 ---fghjkl" << std::endl;
     print_myvector(m16);
     std::cout << std::endl;
@@ -331,7 +330,6 @@ int     main()
 
     std::cout << "--- m16 ---" << std::endl;
     print_myvector(m16);
-=======
     std::cout << *(it6++) << std::endl;
     std::cout << *(it6--) << std::endl;
     std::cout << *it6 << std::endl;
@@ -339,7 +337,6 @@ int     main()
     std::cout << *(mit6++) << std::endl;
     std::cout << *(mit6--) << std::endl;
     std::cout << *mit6 << std::endl;
->>>>>>> 6fd3f310e706c8f7e960501017b64c60b4b2b446
     std::cout << std::endl;
 
     ++mit6;

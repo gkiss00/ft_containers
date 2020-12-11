@@ -1,7 +1,7 @@
 #ifndef FT_QUEUE
 #define FT_QUEUE
 
-#include "ft_node.hpp"
+#include "./../utils/ft_node.hpp"
 #include <stdio.h>
 #include <iostream>
 
@@ -11,6 +11,7 @@ class ft_queue {
     public:
         typedef T value_type;
         typedef unsigned int size_type;
+        //typedef Container container_type;
     private:
         ft_node<T> *node;
     public:
@@ -19,8 +20,8 @@ class ft_queue {
         ft_queue &operator=(const ft_queue &target);
         ~ft_queue();
 
-        bool empty();
-        size_type size();
+        bool empty() const;
+        size_type size() const;
         value_type front();
         value_type back();
         void push(T target);
@@ -108,25 +109,24 @@ ft_queue<T>::~ft_queue()
 //****************************************
 
 template<class T>
-bool ft_queue<T>::empty()
+bool ft_queue<T>::empty() const
 {
     return(this->node == NULL ? (true) : (false));
 }
 
 template<class T>
-typename ft_queue<T>::size_type ft_queue<T>::size()
+typename ft_queue<T>::size_type ft_queue<T>::size() const
 {
     unsigned int i;
     ft_node<T> *tmp;
 
     i = 0;
     tmp = this->node;
-    while(this->node != NULL)
+    while(tmp != NULL)
     {
         ++i;
-        this->node = this->node->getNext();
+        tmp = tmp->getNext();
     }
-    this->node = tmp;
     return (i);
 }
 

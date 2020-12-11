@@ -73,6 +73,7 @@
         "concepts": "cpp",
         "numeric": "cpp",
         "random": "cpp",
-        "ranges": "cpp"
+        "ranges": "cpp",
+        "list": "cpp"
     }
 }
