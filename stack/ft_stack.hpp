@@ -1,9 +1,10 @@
 #ifndef FT_STACK
 #define FT_STACK
 
-#include "ft_node.hpp"
+
 #include <stdio.h>
 #include <iostream>
+#include "./../utils/ft_node.hpp"
 
 namespace ft {
 

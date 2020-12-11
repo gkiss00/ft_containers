@@ -22,7 +22,7 @@ class vector
 		explicit    iterator(vector<value_type, allocator_type> &container, int index);
         iterator(const iterator &target);
         iterator    &operator=(const iterator &target);
-        ~iterator() {}
+        ~iterator() { std::cout << "je suis dans le destructeur" << std::endl;}
 		value_type  operator*() const;
         iterator    operator+(const iterator &op) const;
         iterator    operator+(const size_type &op) const;
@@ -59,7 +59,7 @@ class vector
 
 	    private:
 		int             _index;
-		const vector    &_container;
+		const vector    _container;
 	};
 
     class reverse_iterator : public std::iterator<std::random_access_iterator_tag, value_type>
@@ -159,8 +159,13 @@ vector<T, Alloc>::iterator::iterator(const iterator &target) : _container(target
 template < class T, class Alloc >
 typename vector<T, Alloc>::iterator     &vector<T, Alloc>::iterator::operator=(const iterator &target)
 {
+    this->_index = target._index;
+    std::cout << "je suis a ; arriere  " <<  target._container.back() << std::endl;
     this->_container = target._container;
-	this->_index = target._index;
+    std::cout << "je suis a ; arriere  " <<  this->_container.back() << std::endl;
+    std::cout << "je suis a ; arriere  " <<  target._container.back() << std::endl;
+    this->_container = target._container;
+	
     return (*this);
 }
 
@@ -503,6 +508,7 @@ vector<T, Alloc>::vector(const vector &target)
 template < class T, class Alloc >
 vector<T, Alloc>::~vector()
 {
+    std::cout << "je detruis mon vector" << std::endl;
     if (this->_tab != NULL)
     {
         for (int i = 0; i < (int)this->_size; ++i)

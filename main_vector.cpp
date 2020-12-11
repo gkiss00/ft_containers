@@ -118,7 +118,7 @@ int     main()
     std::cout << " --- Front --- " << std::endl;
     std::cout << v4.front() << std::endl;
     std::cout << m4.front() << std::endl;
-    /* This code SEGFAULT with bith */
+    /* This code SEGFAULT with both */
     // std::vector<int>    v5;
     // vector<int>    m5;
     // std::cout << v5.front() << std::endl;
@@ -318,13 +318,13 @@ int     main()
     it6 = it6 + 1;
     it6 = it6 - 1;
 
-    std::cout << "--- m16 ---" << std::endl;
+    std::cout << "--- m16 ---fghjkl" << std::endl;
     print_myvector(m16);
     std::cout << std::endl;
 
-    // vector<int>::iterator mit7(mit6);
+    vector<int>::iterator mit7(mit6);
 
-    mit7 = mit6 + 1; // le probleme vient de lássignation
+    mit7 = (mit6); // le probleme vient de lássignation
 
     std::cout << "--- m16 ---" << std::endl;
     print_myvector(m16);
