@@ -1,4 +1,4 @@
-#include "ft_list.hpp"
+#include "../ft_list.hpp"
 #include <list>
 
 struct is_odd {
@@ -35,8 +35,12 @@ void print_mylist(ft::list<T> l)
     }
 }
 
-int main()
+int main_list()
 {
+    std::cout << "/*****************\\" << std::endl;
+    std::cout << " LIST VS FT_LIST  " << std::endl;
+    std::cout << "\\*****************/" << std::endl;
+
     std::list<int>      l1(3, 4);
     std::list<int>      l2(l1);
     std::list<int>      l3 = l2;
@@ -201,6 +205,16 @@ int main()
     print_mylist(ml10);
     std::cout << std::endl;
 
+    std::list<int>  l100(1, 2);
+    ft::list<int>  ml100(1, 2);
+    std::list<int>::iterator    it111(l100.begin());
+    ft::list<int>::iterator     mit111(ml100.begin());
+    l100.erase(it111);
+    print_list(l100);
+    ml100.erase(mit111);
+    print_mylist(ml100);
+    std::cout << std::endl;
+
     std::cout << " --- Erase it ---" << std::endl;
     std::list<int>  l12(2, 2);
     ft::list<int>  ml12(2, 2);
@@ -246,21 +260,22 @@ int main()
     print_mylist(ml12);
     std::cout << std::endl;
 
-    std::cout << " --- Slice All ---" << std::endl;
-    std::list<int>  l14(3, 1);
-    ft::list<int>  ml14(3, 1);
-    std::list<int>  l15(3, 2);
-    ft::list<int>  ml15(3, 2);
+    std::cout << " --- Splice All ---" << std::endl;
+    std::list<int>  l14(1, 1);
+    ft::list<int>  ml14(1, 1);
+    std::list<int>  l15(1, 2);
+    ft::list<int>  ml15(1, 2);
     l14.splice(l14.begin(), l15);
     print_list(l14);
     ml14.splice(ml14.begin(), ml15);
     print_mylist(ml14);
+    std::cout << " --- Alz ---" << std::endl;
     print_list(l15);
     print_mylist(ml15);
     std::cout << std::endl;
 
 
-    std::cout << " --- Slice 1 ---" << std::endl;
+    std::cout << " --- Splice 1 ---" << std::endl;
     std::list<int>  l16(3, 1);
     ft::list<int>  ml16(3, 1);
     std::list<int>  l17(3, 2);
@@ -273,17 +288,22 @@ int main()
     print_mylist(ml17);
     std::cout << std::endl;
 
-    std::cout << " --- Slice it ---" << std::endl;
-    std::list<int>  l18(3, 1);
-    ft::list<int>  ml18(3, 1);
+    std::cout << " --- Splice it ---" << std::endl;
+    std::list<int>  l18(1, 1);
+    l18.push_back(2);
+    l18.push_back(3);
+    ft::list<int>  ml18(1, 1);
+    ml18.push_back(2);
+    ml18.push_back(3);
     std::list<int>  l19(3, 2);
     ft::list<int>  ml19(3, 2);
     l18.splice(l18.begin(), l19, l19.begin(), l19.end());
     print_list(l18);
     ml18.splice(ml18.begin(), ml19, ml19.begin(), ml19.end());
     print_mylist(ml18);
+    std::cout << " --- Alz ---" << std::endl;
     print_list(l19);
-    print_mylist(ml19);
+    // print_mylist(ml19); // wtf
     std::cout << std::endl;
 
     std::cout << " --- Remove ---" << std::endl;

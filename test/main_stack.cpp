@@ -1,9 +1,9 @@
 #include <iostream>
 #include <string>
 #include <stack>
-#include "ft_stack.hpp"
+#include "../ft_stack.hpp"
 
-int     main()
+int     main_stack()
 {
     std::cout << "/*****************\\" << std::endl;
     std::cout << " STACK VS FT_STACK  " << std::endl;
@@ -136,4 +136,5 @@ int     main()
     delete(ft_stack_copy);
     delete(ft_stack1);
     delete(stack1);
+    return (0);
 }

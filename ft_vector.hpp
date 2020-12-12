@@ -18,14 +18,16 @@ class vector
     typedef typename allocator_type::const_pointer   const_pointer;
     typedef size_t  size_type;
 
-    class iterator : public std::iterator<std::random_access_iterator_tag, value_type>
+    class iterator
 	{
 	    public:
+        typedef ptrdiff_t   difference_type;
+
         iterator();
 		explicit    iterator(vector<value_type, allocator_type> &container, int index);
         iterator(const iterator &target);
         iterator    &operator=(const iterator &target);
-        ~iterator() { std::cout << "je suis dans le destructeur" << std::endl;}
+        ~iterator() { /*std::cout << "je suis dans le destructeur" << std::endl;*/}
 		value_type  operator*() const;
         iterator    operator+(const iterator &op) const;
         iterator    operator+(const size_type &op) const;
@@ -50,11 +52,13 @@ class vector
 		vector      *_container;
 	};
 
-    typedef typename std::iterator_traits<iterator>::difference_type  difference_type;
+    typedef typename iterator::difference_type  difference_type;
 
-    class const_iterator : public std::iterator<std::random_access_iterator_tag, value_type>
+    class const_iterator
 	{
 	    public:
+        typedef ptrdiff_t   difference_type;
+
         const_iterator();
 		explicit    const_iterator(const vector<value_type, allocator_type> &container, int index);
         const_iterator(const const_iterator &target);
@@ -80,18 +84,15 @@ class vector
         reference   operator[](size_type n) const;
 
 	    private:
-<<<<<<< HEAD
 		int             _index;
-		const vector    _container;
-=======
-		int         _index;
-		const vector      *_container;
->>>>>>> 6fd3f310e706c8f7e960501017b64c60b4b2b446
+		const vector    *_container;
 	};
 
-    class reverse_iterator : public std::iterator<std::random_access_iterator_tag, value_type>
+    class reverse_iterator
 	{
 	    public:
+        typedef ptrdiff_t   difference_type;
+
         reverse_iterator();
 		explicit    reverse_iterator(vector<value_type, allocator_type> &container, int index);
         reverse_iterator(const reverse_iterator &target);
@@ -121,9 +122,11 @@ class vector
 		vector      *_container;
 	};
 
-    class const_reverse_iterator : public std::iterator<std::random_access_iterator_tag, value_type>
+    class const_reverse_iterator
 	{
 	    public:
+        typedef ptrdiff_t   difference_type;
+
         const_reverse_iterator();
 		explicit    const_reverse_iterator(const vector<value_type, allocator_type> &container, int index);
         const_reverse_iterator(const const_reverse_iterator &target);
@@ -504,10 +507,10 @@ template < class T, class Alloc >
 typename vector<T, Alloc>::iterator     &vector<T, Alloc>::iterator::operator=(const iterator &target)
 {
     this->_index = target._index;
-    std::cout << "je suis a ; arriere  " <<  target._container.back() << std::endl;
+    // std::cout << "je suis a ; arriere  " <<  target._container->back() << std::endl;
     this->_container = target._container;
-    std::cout << "je suis a ; arriere  " <<  this->_container.back() << std::endl;
-    std::cout << "je suis a ; arriere  " <<  target._container.back() << std::endl;
+    // std::cout << "je suis a ; arriere  " <<  this->_container->back() << std::endl;
+    // std::cout << "je suis a ; arriere  " <<  target._container->back() << std::endl;
     this->_container = target._container;
 	
     return (*this);
@@ -1163,7 +1166,7 @@ vector<T, Alloc>::vector(const vector &target)
 template < class T, class Alloc >
 vector<T, Alloc>::~vector()
 {
-    std::cout << "je detruis mon vector" << std::endl;
+    // std::cout << "je detruis mon vector" << std::endl;
     if (this->_tab != NULL)
     {
         for (int i = 0; i < (int)this->_size; ++i)

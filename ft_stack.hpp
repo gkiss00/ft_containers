@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <iostream>
-#include "./../utils/ft_node.hpp"
+#include "./utils/ft_node.hpp"
 
 namespace ft {
 

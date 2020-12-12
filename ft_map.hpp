@@ -1,7 +1,7 @@
 #ifndef FT_MAP
 #define FT_MAP
 
-#include "./../utils/ft_map_node.hpp"
+#include "./utils/ft_map_node.hpp"
 #include <stdio.h>
 #include <iostream>
 #include <utility>

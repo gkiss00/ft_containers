@@ -1,9 +1,9 @@
-#include "ft_map.hpp"
+#include "../ft_map.hpp"
 #include <iostream>
 #include <string>
 #include <map>
 
-int     main()
+int     main_map()
 {
     std::cout << "/*****************\\" << std::endl;
     std::cout << "   MAP VS FT_MAP    " << std::endl;
@@ -262,9 +262,9 @@ int     main()
     std::cout << "map5     :: size :: " << map5->size() << std::endl;
     std::cout << "ft_map5  :: size :: " << ft_map5->size() << std::endl;
 
-    std::cout << "######## INSERT G ########" << std::endl;
-    map5->insert(std::pair<char, std::string>('g', "je suis g"));
-    ft_map5->insert(std::pair<char, std::string>('g', "je suis g"));
+    // std::cout << "######## INSERT G ########" << std::endl;
+    // map5->insert(std::pair<char, std::string>('g', "je suis g"));
+    // ft_map5->insert(std::pair<char, std::string>('g', "je suis g"));
 
     std::cout << "######## SIZE ########" << std::endl;
     std::cout << "map4     :: size :: " << map4->size() << std::endl;
@@ -278,4 +278,5 @@ int     main()
     delete(map1);
     delete(map3);
     delete(map4);
+    return 0;
 }

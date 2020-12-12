@@ -26,9 +26,11 @@ class list
     typedef typename allocator_type::const_pointer   const_pointer;
     typedef size_t  size_type;
 
-    class iterator : public std::iterator<std::random_access_iterator_tag, value_type>
+    class iterator
 	{
 	    public:
+        typedef ptrdiff_t   difference_type;
+
         iterator();
 		explicit    iterator(list<value_type, allocator_type> &container, int index);
         iterator(const iterator &target);
@@ -47,9 +49,11 @@ class list
 		list        *_container;
 	};
 
-    class const_iterator : public std::iterator<std::random_access_iterator_tag, value_type>
+    class const_iterator
 	{
 	    public:
+        typedef ptrdiff_t   difference_type;
+
         const_iterator();
 		explicit    const_iterator(const list<value_type, allocator_type> &container, int index);
         const_iterator(const const_iterator &target);
@@ -68,9 +72,11 @@ class list
 		const list        *_container;
 	};
 
-    class reverse_iterator : public std::iterator<std::random_access_iterator_tag, value_type>
+    class reverse_iterator
 	{
 	    public:
+        typedef ptrdiff_t   difference_type;
+
         reverse_iterator();
 		explicit    reverse_iterator(list<value_type, allocator_type> &container, int index);
         reverse_iterator(const reverse_iterator &target);
@@ -89,9 +95,11 @@ class list
 		list        *_container;
 	};
 
-    class const_reverse_iterator : public std::iterator<std::random_access_iterator_tag, value_type>
+    class const_reverse_iterator
 	{
 	    public:
+        typedef ptrdiff_t   difference_type;
+
         const_reverse_iterator();
 		explicit    const_reverse_iterator(const list<value_type, allocator_type> &container, int index);
         const_reverse_iterator(const const_reverse_iterator &target);
@@ -110,7 +118,7 @@ class list
 		const list        *_container;
 	};
 
-    typedef typename std::iterator_traits<iterator>::difference_type  difference_type;
+    typedef typename iterator::difference_type  difference_type;
 
     explicit list(const allocator_type &alloc = allocator_type());
     explicit list(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type());
@@ -978,19 +986,18 @@ typename list<T, Alloc>::iterator list<T, Alloc>::erase(iterator position)
 template < class T, class Alloc >
 typename list<T, Alloc>::iterator        list<T, Alloc>::erase(iterator first, iterator last)
 {
-    iterator         it = this->begin();
-    int len = this->_size;
-    int i = 0;
+    iterator    tmp = first;
 
-    while (first != last)
+    while (tmp != last)
     {
-        if (i < len - 1)
-            this->erase(first);
-        ++first;
-        ++it;
-        ++i;
+        ++tmp;
     }
-    return it;
+    while (tmp != first)
+    {
+        this->erase(tmp);
+        --tmp;
+    }
+    return first;
 }
 
 template < class T, class Alloc >
@@ -1127,7 +1134,6 @@ void    list<T, Alloc>::unique (BinaryPredicate binary_pred)
 template < class T, class Alloc >
 void            list<T, Alloc>::splice (iterator position, list& x)
 {
-    (void)position;
     this->insert(position, x.begin(), x.end());
     x.erase(x.begin(), x.end());
 }

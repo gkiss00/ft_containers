@@ -1,4 +1,4 @@
-#include "ft_vector.hpp"
+#include "../ft_vector.hpp"
 #include <iostream>
 #include <vector>
 
@@ -22,8 +22,12 @@ void    print_myvector(ft::vector<T> &vector)
     }
 }
 
-int     main()
+int     main_vector()
 {
+    std::cout << "/*****************\\" << std::endl;
+    std::cout << " VECTOR VS FT_VECTOR  " << std::endl;
+    std::cout << "\\*****************/" << std::endl;
+
     std::vector<int>    vector1(3, 6);
     std::vector<int>    vector2(vector1);
     std::vector<int>    vector3 = vector2;
@@ -320,16 +324,7 @@ int     main()
     mit6 = mit6 + 1;
     mit6 = mit6 - 1;
 
-    std::cout << "--- m16 ---fghjkl" << std::endl;
-    print_myvector(m16);
-    std::cout << std::endl;
-
-    vector<int>::iterator mit7(mit6);
-
-    mit7 = (mit6); // le probleme vient de lássignation
-
     std::cout << "--- m16 ---" << std::endl;
-    print_myvector(m16);
     std::cout << *(it6++) << std::endl;
     std::cout << *(it6--) << std::endl;
     std::cout << *it6 << std::endl;

@@ -1,9 +1,9 @@
-#include "ft_queue.hpp"
+#include "../ft_queue.hpp"
 #include <iostream>
 #include <string>
 #include <queue>
 
-int     main()
+int     main_queue()
 {
     std::cout << "/*****************\\" << std::endl;
     std::cout << " QUEUE VS FT_QUEUE  " << std::endl;
@@ -162,7 +162,7 @@ int     main()
     std::cout << "ft_queue :: front:: " << ft_queue2->front() << " " << ft_queue_copy->front() << std::endl;
 
     delete(ft_queue_copy);
-
     delete(ft_queue1);
     delete(queue1);
+    return (0);
 }

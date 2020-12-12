@@ -1,7 +1,7 @@
 #ifndef FT_QUEUE
 #define FT_QUEUE
 
-#include "./../utils/ft_node.hpp"
+#include "./utils/ft_node.hpp"
 #include <stdio.h>
 #include <iostream>
 
