@@ -41,12 +41,19 @@ int main_list()
     std::cout << " LIST VS FT_LIST  " << std::endl;
     std::cout << "\\*****************/" << std::endl;
 
-    std::list<int>      l1(3, 4);
+    std::list<int>      l1(1, 4);
     std::list<int>      l2(l1);
     std::list<int>      l3 = l2;
-    ft::list<int>       ml1(3, 4);
+    ft::list<int>       ml1(1, 4);
     ft::list<int>       ml2(ml1);
     ft::list<int>       ml3 = ml2;
+
+    // std::cout << " --- it ---" << std::endl;
+    // std::list<int>      l111(++l3.begin(), --l3.end());
+    // ft::list<int>      ml111(++ml3.begin(), --ml3.end());
+    // print_list(l111);
+    // print_mylist(ml111);
+    // std::cout << std::endl;
 
     print_list(l3);
     print_mylist(ml3);
@@ -228,6 +235,12 @@ int main_list()
     print_mylist(ml12);
     std::cout << std::endl;
 
+    l12.erase(--it12, ++ite12);
+    print_list(l12);
+    ml12.erase(--mit12, ++mite12);
+    print_mylist(ml12);
+    std::cout << std::endl;
+
     std::cout << " --- Erase it ---" << std::endl;
     std::list<int>  l13(3, 1);
     ft::list<int>  ml13(3, 1);
@@ -303,7 +316,7 @@ int main_list()
     print_mylist(ml18);
     std::cout << " --- Alz ---" << std::endl;
     print_list(l19);
-    // print_mylist(ml19); // wtf
+    print_mylist(ml19);
     std::cout << std::endl;
 
     std::cout << " --- Remove ---" << std::endl;

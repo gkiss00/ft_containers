@@ -241,6 +241,7 @@ class list
     struct s_elem<T>    *_first;
     Alloc               *_allocator;
     T                   *_zero;
+    bool                check_iterators(iterator first, iterator last);
 };
 
 /* --- Constructors --- */
@@ -302,6 +303,23 @@ list<T, Alloc>::list(typename std::enable_if<!std::is_integral<InputIterator>::v
 	struct s_elem<T> *temp;
     struct s_elem<T> *prev_temp;
     InputIterator   it = first;
+
+    // iterator    my_first = this->begin();
+    // iterator    my_last = this->end();
+    // int         n = 0;
+    // while (my_first != my_last)
+    // {
+    //     if (n == 0 && first == my_first)
+    //         n = 1;
+    //     if (n == 1 && last == my_last)
+    //         n = 2;
+    //     ++my_first;
+    // }
+    // if (this->check_iterators(first, last) == 0)
+    // {
+    //     list(1, 1);
+    //     return ;
+    // }
 
     this->_allocator = new Alloc(alloc);
     this->_size = 0;
@@ -987,16 +1005,20 @@ template < class T, class Alloc >
 typename list<T, Alloc>::iterator        list<T, Alloc>::erase(iterator first, iterator last)
 {
     iterator    tmp = first;
-
+    
+    if (this->check_iterators(first, last) == 0)
+        return first;
     while (tmp != last)
     {
         ++tmp;
     }
+    --tmp;
     while (tmp != first)
     {
         this->erase(tmp);
         --tmp;
     }
+    this->erase(tmp);
     return first;
 }
 
@@ -1657,6 +1679,25 @@ bool    list<T, Alloc>::const_reverse_iterator::operator==(const const_reverse_i
 {
 	return this->_index == op._index;
 }
+
+template < class T, class Alloc >
+bool    list<T, Alloc>::check_iterators(iterator first, iterator last)
+{
+    iterator    my_first = this->begin();
+    iterator    my_last = this->end();
+    int         n = 0;
+
+    while (my_first != my_last)
+    {
+        if (n == 0 && first == my_first)
+            n = 1;
+        if (n == 1 && last == my_last)
+            n = 2;
+        ++my_first;
+    }
+    return n == 2;
+}
+
 
 }
 
