@@ -1,4 +1,4 @@
-#include "../ft_queue.hpp"
+#include "../queue.hpp"
 #include <iostream>
 #include <string>
 #include <queue>
@@ -12,8 +12,8 @@ int     main_queue()
     std::queue<int> *queue1 = new std::queue<int>();
     std::queue<int> *queue2 = new std::queue<int>();
 
-    ft::ft_queue<int> *ft_queue1 = new ft::ft_queue<int>();
-    ft::ft_queue<int> *ft_queue2 = new ft::ft_queue<int>();
+    ft::queue<int> *ft_queue1 = new ft::queue<int>();
+    ft::queue<int> *ft_queue2 = new ft::queue<int>();
 
     std::cout << "######## EMPTY ########" << std::endl;
     std::cout << "queue    :: empty:: " << queue1->empty() << " " << queue2->empty() << std::endl;
@@ -131,7 +131,7 @@ int     main_queue()
 
     std::cout << "######## CONSTRUCTOR BY COPY ########" << std::endl;
     std::queue<int> *queue_copy = new std::queue<int>(*queue2);
-    ft::ft_queue<int> *ft_queue_copy = new ft::ft_queue<int>(*ft_queue2);
+    ft::queue<int> *ft_queue_copy = new ft::queue<int>(*ft_queue2);
 
     std::cout << "######## SIZE ########" << std::endl;
     std::cout << "queue    :: size :: " << queue2->size() << " " << queue_copy->size() << std::endl;

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <stack>
-#include "../ft_stack.hpp"
+#include "../stack.hpp"
 
 int     main_stack()
 {
@@ -12,8 +12,8 @@ int     main_stack()
     std::stack<int> *stack1 = new std::stack<int>();
     std::stack<int> *stack2 = new std::stack<int>();
 
-    ft::ft_stack<int> *ft_stack1 = new ft::ft_stack<int>();
-    ft::ft_stack<int> *ft_stack2 = new ft::ft_stack<int>();
+    ft::stack<int> *ft_stack1 = new ft::stack<int>();
+    ft::stack<int> *ft_stack2 = new ft::stack<int>();
 
     std::cout << "######## EMPTY ########" << std::endl;
     std::cout << "stack    :: empty:: " << stack1->empty() << " " << stack2->empty() << std::endl;
@@ -119,7 +119,7 @@ int     main_stack()
 
     std::cout << "######## CONSTRUCTOR BY COPY ########" << std::endl;
     std::stack<int> *stack_copy = new std::stack<int>(*stack2);
-    ft::ft_stack<int> *ft_stack_copy = new ft::ft_stack<int>(*ft_stack2);
+    ft::stack<int> *ft_stack_copy = new ft::stack<int>(*ft_stack2);
     
     std::cout << "######## TOP ########" << std::endl;
     std::cout << "stack    :: top  :: " << stack2->top() << " " << stack_copy->top() << std::endl;

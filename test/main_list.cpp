@@ -1,4 +1,4 @@
-#include "../ft_list.hpp"
+#include "../list.hpp"
 #include <list>
 
 struct is_odd {
@@ -54,6 +54,14 @@ int main_list()
     // print_list(l111);
     // print_mylist(ml111);
     // std::cout << std::endl;
+
+    std::list<int>      l333;
+    ft::list<int>       ml333;
+    l333 = l3;
+    ml333 = ml3;
+    print_list(l333);
+    print_mylist(ml333);
+    std::cout << std::endl;
 
     print_list(l3);
     print_mylist(ml3);
@@ -438,6 +446,20 @@ int main_list()
     print_list(l24);
     print_mylist(ml24);
     std::cout << std::endl;
+
+    std::cout << " --- Front ---" << std::endl;
+    std::list<int> l222(5);
+    ft::list<int> ml222(5); 
+    l222.push_back(4);
+    ml222.push_back(4);
+    l222.push_back(3);
+    ml222.push_back(3);
+    const std::list<int> wl222(l222);
+    const ft::list<int> wml222(ml222);
+    std::cout << wl222.back() << std::endl;
+    print_list(wl222);
+    std::cout << wml222.back() << std::endl;
+    print_mylist(wml222);
 
     return 0;
 }

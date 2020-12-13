@@ -1,15 +1,15 @@
-#ifndef FT_STACK
-#define FT_STACK
+#ifndef STACK_HPP
+# define STACK_HPP
 
 
-#include <stdio.h>
-#include <iostream>
-#include "./utils/ft_node.hpp"
+# include <stdio.h>
+# include <iostream>
+# include "./utils/ft_node.hpp"
 
 namespace ft {
 
 template<class T>
-class ft_stack {
+class stack {
     public:
         typedef T value_type;
         typedef unsigned int size_type;
@@ -17,10 +17,10 @@ class ft_stack {
     private:
         ft_node<T> *node;
     public:
-        ft_stack();
-        ft_stack(const ft_stack &target);
-        ft_stack &operator=(const ft_stack &target);
-        ~ft_stack();
+        stack();
+        stack(const stack &target);
+        stack &operator=(const stack &target);
+        ~stack();
 
         bool empty() const;
         size_type size() const;
@@ -28,12 +28,12 @@ class ft_stack {
         void push(T target);
         void pop();
 
-        bool operator==(ft_stack<T> &target);
-        bool operator!=(ft_stack<T> &target);
-        bool operator<(ft_stack<T> &target);
-        bool operator<=(ft_stack<T> &target);
-        bool operator>(ft_stack<T> &target);
-        bool operator>=(ft_stack<T> &target);
+        bool operator==(stack<T> &target);
+        bool operator!=(stack<T> &target);
+        bool operator<(stack<T> &target);
+        bool operator<=(stack<T> &target);
+        bool operator>(stack<T> &target);
+        bool operator>=(stack<T> &target);
 };
 
 //****************************************
@@ -43,13 +43,13 @@ class ft_stack {
 //****************************************
 
 template<class T>
-ft_stack<T>::ft_stack()
+stack<T>::stack()
 {
     this->node = NULL;
 }
 
 template<class T>
-ft_stack<T>::ft_stack(const ft_stack &target)
+stack<T>::stack(const stack &target)
 {
     ft_node<T> *tmp;
     ft_node<T> *node;
@@ -74,7 +74,7 @@ ft_stack<T>::ft_stack(const ft_stack &target)
 }
 
 template<class T>
-ft_stack<T> &ft_stack<T>::operator=(const ft_stack &target)
+stack<T> &stack<T>::operator=(const stack &target)
 {
     ft_node<T> *tmp;
 
@@ -90,7 +90,7 @@ ft_stack<T> &ft_stack<T>::operator=(const ft_stack &target)
 }
 
 template<typename T>
-ft_stack<T>::~ft_stack()
+stack<T>::~stack()
 {
     ft_node<T> *tmp;
 
@@ -110,13 +110,13 @@ ft_stack<T>::~ft_stack()
 //****************************************
 
 template<class T>
-bool ft_stack<T>::empty() const
+bool stack<T>::empty() const
 {
     return(this->node == NULL ? (true) : (false));
 }
 
 template<class T>
-typename ft_stack<T>::size_type ft_stack<T>::size() const
+typename stack<T>::size_type stack<T>::size() const
 {
     unsigned int i;
     ft_node<T> *tmp;
@@ -132,7 +132,7 @@ typename ft_stack<T>::size_type ft_stack<T>::size() const
 }
 
 template<class T>
-typename ft_stack<T>::value_type ft_stack<T>::top()
+typename stack<T>::value_type stack<T>::top()
 {
     ft_node<T> *tmp;
     ft_node<T> *ret;
@@ -150,7 +150,7 @@ typename ft_stack<T>::value_type ft_stack<T>::top()
 }
 
 template<class T>
-void ft_stack<T>::push(T target)
+void stack<T>::push(T target)
 {
     ft_node<T> *tmp;
     ft_node<T> *nw;
@@ -169,7 +169,7 @@ void ft_stack<T>::push(T target)
 }
 
 template<class T>
-void ft_stack<T>::pop()
+void stack<T>::pop()
 {
     ft_node<T> *start;
     ft_node<T> *precedent;
@@ -203,7 +203,7 @@ void ft_stack<T>::pop()
 //****************************************
 
 template<class T>
-bool ft_stack<T>::operator==(ft_stack<T> &target)
+bool stack<T>::operator==(stack<T> &target)
 {
     unsigned int size;
     ft_node<T> *node1;
@@ -225,7 +225,7 @@ bool ft_stack<T>::operator==(ft_stack<T> &target)
 }
 
 template<class T>
-bool ft_stack<T>::operator!=(ft_stack<T> &target)
+bool stack<T>::operator!=(stack<T> &target)
 {
     unsigned int size;
     ft_node<T> *node1;
@@ -247,7 +247,7 @@ bool ft_stack<T>::operator!=(ft_stack<T> &target)
 }
 
 template<class T>
-bool ft_stack<T>::operator<(ft_stack<T> &target)
+bool stack<T>::operator<(stack<T> &target)
 {
     unsigned int size;
     ft_node<T> *node1;
@@ -269,13 +269,13 @@ bool ft_stack<T>::operator<(ft_stack<T> &target)
 }
 
 template<class T>
-bool ft_stack<T>::operator<=(ft_stack<T> &target)
+bool stack<T>::operator<=(stack<T> &target)
 {
     return (this->operator<(target) || this->operator==(target));
 }
 
 template<class T>
-bool ft_stack<T>::operator>(ft_stack<T> &target)
+bool stack<T>::operator>(stack<T> &target)
 {
     unsigned int size;
     ft_node<T> *node1;
@@ -297,7 +297,7 @@ bool ft_stack<T>::operator>(ft_stack<T> &target)
 }
 
 template<class T>
-bool ft_stack<T>::operator>=(ft_stack<T> &target)
+bool stack<T>::operator>=(stack<T> &target)
 {
     return (this->operator>(target) || this->operator==(target));
 }

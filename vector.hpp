@@ -1,5 +1,5 @@
-#ifndef FT_VECTOR_HPP
-# define FT_VECTOR_HPP
+#ifndef VECTOR_HPP
+# define VECTOR_HPP
 
 # include <iostream>
 
@@ -29,6 +29,7 @@ class vector
         iterator    &operator=(const iterator &target);
         ~iterator() { /*std::cout << "je suis dans le destructeur" << std::endl;*/}
 		value_type  operator*() const;
+		value_type  operator->() const;
         iterator    operator+(const iterator &op) const;
         iterator    operator+(const size_type &op) const;
         iterator    operator-(const iterator &op) const;
@@ -65,6 +66,7 @@ class vector
         const_iterator    &operator=(const const_iterator &target);
         ~const_iterator() {}
 		value_type  operator*() const;
+		value_type  operator->() const;
         const_iterator    operator+(const const_iterator &op) const;
         const_iterator    operator+(const size_type &op) const;
         const_iterator    operator-(const const_iterator &op) const;
@@ -99,6 +101,7 @@ class vector
         reverse_iterator    &operator=(const reverse_iterator &target);
         ~reverse_iterator() {}
 		value_type  operator*() const;
+		value_type  operator->() const;
         reverse_iterator    operator+(const reverse_iterator &op) const;
         reverse_iterator    operator+(const size_type &op) const;
         reverse_iterator    operator-(const reverse_iterator &op) const;
@@ -133,6 +136,7 @@ class vector
         const_reverse_iterator    &operator=(const const_reverse_iterator &target);
         ~const_reverse_iterator() {}
 		value_type  operator*() const;
+		value_type  operator->() const;
         const_reverse_iterator    operator+(const const_reverse_iterator &op) const;
         const_reverse_iterator    operator+(const size_type &op) const;
         const_reverse_iterator    operator-(const const_reverse_iterator &op) const;
@@ -238,15 +242,18 @@ class vector < bool, Alloc >
     typedef typename allocator_type::const_pointer   const_pointer;
     typedef size_t  size_type;
 
-    class iterator : public std::iterator<std::random_access_iterator_tag, value_type>
+    class iterator
 	{
 	    public:
+        typedef ptrdiff_t   difference_type;
+
         iterator();
 		explicit    iterator(vector<value_type, allocator_type> &container, int index);
         iterator(const iterator &target);
         iterator    &operator=(const iterator &target);
         ~iterator() {}
 		value_type  operator*() const;
+		value_type  operator->() const;
         iterator    operator+(const iterator &op) const;
         iterator    operator+(const size_type &op) const;
         iterator    operator-(const iterator &op) const;
@@ -270,15 +277,20 @@ class vector < bool, Alloc >
 		vector      *_container;
 	};
 
-    class const_iterator : public std::iterator<std::random_access_iterator_tag, value_type>
+    typedef typename iterator::difference_type  difference_type;
+
+    class const_iterator
 	{
 	    public:
+        typedef ptrdiff_t   difference_type;
+
         const_iterator();
 		explicit    const_iterator(const vector<value_type, allocator_type> &container, int index);
         const_iterator(const const_iterator &target);
         const_iterator    &operator=(const const_iterator &target);
         ~const_iterator() {}
 		value_type  operator*() const;
+		value_type  operator->() const;
         const_iterator    operator+(const const_iterator &op) const;
         const_iterator    operator+(const size_type &op) const;
         const_iterator    operator-(const const_iterator &op) const;
@@ -302,15 +314,18 @@ class vector < bool, Alloc >
 		const vector      *_container;
 	};
 
-    class reverse_iterator : public std::iterator<std::random_access_iterator_tag, value_type>
+    class reverse_iterator
 	{
 	    public:
+        typedef ptrdiff_t   difference_type;
+
         reverse_iterator();
 		explicit    reverse_iterator(vector<value_type, allocator_type> &container, int index);
         reverse_iterator(const reverse_iterator &target);
         reverse_iterator    &operator=(const reverse_iterator &target);
         ~reverse_iterator() {}
 		value_type  operator*() const;
+		value_type  operator->() const;
         reverse_iterator    operator+(const reverse_iterator &op) const;
         reverse_iterator    operator+(const size_type &op) const;
         reverse_iterator    operator-(const reverse_iterator &op) const;
@@ -334,15 +349,18 @@ class vector < bool, Alloc >
 		vector      *_container;
 	};
 
-    class const_reverse_iterator : public std::iterator<std::random_access_iterator_tag, value_type>
+    class const_reverse_iterator
 	{
 	    public:
+        typedef ptrdiff_t   difference_type;
+
         const_reverse_iterator();
 		explicit    const_reverse_iterator(const vector<value_type, allocator_type> &container, int index);
         const_reverse_iterator(const const_reverse_iterator &target);
         const_reverse_iterator    &operator=(const const_reverse_iterator &target);
         ~const_reverse_iterator() {}
 		value_type  operator*() const;
+		value_type  operator->() const;
         const_reverse_iterator    operator+(const const_reverse_iterator &op) const;
         const_reverse_iterator    operator+(const size_type &op) const;
         const_reverse_iterator    operator-(const const_reverse_iterator &op) const;
@@ -523,6 +541,12 @@ T   vector<T, Alloc>::iterator::operator*() const
 }
 
 template < class T, class Alloc >
+T   vector<T, Alloc>::iterator::operator->() const
+{
+    return this->_container[0][this->_index];
+}
+
+template < class T, class Alloc >
 typename vector<T, Alloc>::iterator    vector<T, Alloc>::iterator::operator+(const iterator &op) const
 {
     iterator    nw(*this->_container, this->_index + op._index);
@@ -669,6 +693,12 @@ typename vector<T, Alloc>::const_iterator     &vector<T, Alloc>::const_iterator:
 
 template < class T, class Alloc >
 T   vector<T, Alloc>::const_iterator::operator*() const
+{
+    return this->_container[0][this->_index];
+}
+
+template < class T, class Alloc >
+T   vector<T, Alloc>::const_iterator::operator->() const
 {
     return this->_container[0][this->_index];
 }
@@ -825,6 +855,12 @@ T   vector<T, Alloc>::reverse_iterator::operator*() const
 }
 
 template < class T, class Alloc >
+T   vector<T, Alloc>::reverse_iterator::operator->() const
+{
+    return this->_container[0][this->_container->size() - this->_index - 1];
+}
+
+template < class T, class Alloc >
 typename vector<T, Alloc>::reverse_iterator    vector<T, Alloc>::reverse_iterator::operator+(const reverse_iterator &op) const
 {
     reverse_iterator    nw(*this->_container, this->_index + op._index);
@@ -937,7 +973,7 @@ bool    vector<T, Alloc>::reverse_iterator::operator>=(const reverse_iterator &o
 template < class T, class Alloc >
 typename Alloc::reference  vector<T, Alloc>::reverse_iterator::operator[](size_type n) const
 {
-    return this->_container[0][this->_container->size() - this->_index + n - 1];
+    return this->_container[0][this->_container->size() - this->_index - n - 1];
 }
 
 /* --- Const Revserse Iterator Class --- */
@@ -971,6 +1007,12 @@ typename vector<T, Alloc>::const_reverse_iterator     &vector<T, Alloc>::const_r
 
 template < class T, class Alloc >
 T   vector<T, Alloc>::const_reverse_iterator::operator*() const
+{
+    return this->_container[0][this->_container->size() - this->_index - 1];
+}
+
+template < class T, class Alloc >
+T   vector<T, Alloc>::const_reverse_iterator::operator->() const
 {
     return this->_container[0][this->_container->size() - this->_index - 1];
 }
@@ -1088,7 +1130,7 @@ bool    vector<T, Alloc>::const_reverse_iterator::operator>=(const const_reverse
 template < class T, class Alloc >
 typename Alloc::reference  vector<T, Alloc>::const_reverse_iterator::operator[](size_type n) const
 {
-    return this->_container[0][this->_container->size() - this->_index + n - 1];
+    return this->_container[0][this->_container->size() - this->_index - n - 1];
 }
 
 /* --- Constructors --- */
@@ -1701,6 +1743,12 @@ bool   vector<bool, Alloc>::iterator::operator*() const
 }
 
 template < class Alloc >
+bool   vector<bool, Alloc>::iterator::operator->() const
+{
+    return this->_container[0][this->_index];
+}
+
+template < class Alloc >
 typename vector<bool, Alloc>::iterator    vector<bool, Alloc>::iterator::operator+(const iterator &op) const
 {
     iterator    nw(*this->_container, this->_index + op._index);
@@ -1847,6 +1895,12 @@ typename vector<bool, Alloc>::const_iterator     &vector<bool, Alloc>::const_ite
 
 template < class Alloc >
 bool   vector<bool, Alloc>::const_iterator::operator*() const
+{
+    return this->_container[0][this->_index];
+}
+
+template < class Alloc >
+bool   vector<bool, Alloc>::const_iterator::operator->() const
 {
     return this->_container[0][this->_index];
 }
@@ -2003,6 +2057,12 @@ bool   vector<bool, Alloc>::reverse_iterator::operator*() const
 }
 
 template < class Alloc >
+bool   vector<bool, Alloc>::reverse_iterator::operator->() const
+{
+    return this->_container[0][this->_container->size() - this->_index - 1];
+}
+
+template < class Alloc >
 typename vector<bool, Alloc>::reverse_iterator    vector<bool, Alloc>::reverse_iterator::operator+(const reverse_iterator &op) const
 {
     reverse_iterator    nw(*this->_container, this->_index + op._index);
@@ -2115,7 +2175,7 @@ bool    vector<bool, Alloc>::reverse_iterator::operator>=(const reverse_iterator
 template < class Alloc >
 typename vector<bool, Alloc>::reference  vector<bool, Alloc>::reverse_iterator::operator[](size_type n) const
 {
-    return this->_container[0][this->_container->size() - this->_index + n - 1];
+    return this->_container[0][this->_container->size() - this->_index - n - 1];
 }
 
 /* --- Const Revserse Iterator Class --- */
@@ -2149,6 +2209,12 @@ typename vector<bool, Alloc>::const_reverse_iterator     &vector<bool, Alloc>::c
 
 template < class Alloc >
 bool   vector<bool, Alloc>::const_reverse_iterator::operator*() const
+{
+    return this->_container[0][this->_container->size() - this->_index - 1];
+}
+
+template < class Alloc >
+bool   vector<bool, Alloc>::const_reverse_iterator::operator->() const
 {
     return this->_container[0][this->_container->size() - this->_index - 1];
 }
@@ -2266,7 +2332,7 @@ bool    vector<bool, Alloc>::const_reverse_iterator::operator>=(const const_reve
 template < class Alloc >
 typename vector<bool, Alloc>::reference  vector<bool, Alloc>::const_reverse_iterator::operator[](size_type n) const
 {
-    return this->_container[0][this->_container->size() - this->_index + n - 1];
+    return this->_container[0][this->_container->size() - this->_index - n - 1];
 }
 
 /* --- Constructors --- */

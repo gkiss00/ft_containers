@@ -1,4 +1,4 @@
-#include "../ft_map.hpp"
+#include "../map.hpp"
 #include <iostream>
 #include <string>
 #include <map>
@@ -10,7 +10,7 @@ int     main_map()
     std::cout << "\\*****************/" << std::endl;
 
     std::map<char, std::string> *map1 = new std::map<char, std::string>();
-    ft::ft_map<char, std::string> *ft_map1 = new ft::ft_map<char, std::string>();
+    ft::map<char, std::string> *ft_map1 = new ft::map<char, std::string>();
     
     std::cout << "######## EMPTY ########" << std::endl;
     std::cout << "map      :: empty:: " << map1->empty() << std::endl;
@@ -49,7 +49,7 @@ int     main_map()
     std::cout << "ft_map   :: count:: " << ft_map1->count('p') << std::endl;
 
     std::map<char, std::string> *map3 = new std::map<char, std::string>();
-    ft::ft_map<char, std::string> *ft_map3 = new ft::ft_map<char, std::string>();
+    ft::map<char, std::string> *ft_map3 = new ft::map<char, std::string>();
 
     map3[0]['e'] = "je suis e";
     ft_map3[0]['e'] = "je suis e";
@@ -68,9 +68,9 @@ int     main_map()
     std::map<char, std::string>::iterator begin = map3->begin();
     std::map<char, std::string>::iterator end = map3->end();
     std::map<char, std::string>::value_compare vc = map3->value_comp();
-    ft::ft_map<char, std::string>::iterator ft_begin = ft_map3->begin();
-    ft::ft_map<char, std::string>::iterator ft_end = ft_map3->end();
-    ft::ft_map<char, std::string>::value_compare ft_vc = ft_map3->value_comp();
+    ft::map<char, std::string>::iterator ft_begin = ft_map3->begin();
+    ft::map<char, std::string>::iterator ft_end = ft_map3->end();
+    ft::map<char, std::string>::value_compare ft_vc = ft_map3->value_comp();
 
     while(ft_begin != ft_end || begin != end)
     {
@@ -94,8 +94,8 @@ int     main_map()
     std::cout << "######## REVERSE ITERATOR ########" << std::endl;
     std::map<char, std::string>::iterator rbegin = map3->begin();
     std::map<char, std::string>::iterator rend = map3->end();
-    ft::ft_map<char, std::string>::reverse_iterator ft_rbegin = ft_map3->rbegin();
-    ft::ft_map<char, std::string>::reverse_iterator ft_rend = ft_map3->rend();
+    ft::map<char, std::string>::reverse_iterator ft_rbegin = ft_map3->rbegin();
+    ft::map<char, std::string>::reverse_iterator ft_rend = ft_map3->rend();
 
     while(ft_rbegin != ft_rend || rbegin != rend)
     {
@@ -119,8 +119,8 @@ int     main_map()
     std::cout << "######## FIND E ########" << std::endl;
     std::map<char, std::string>::iterator find_begin = map3->begin();
     std::map<char, std::string>::iterator find_end = map3->end();
-    ft::ft_map<char, std::string>::iterator ft_find_begin = ft_map3->find('e');
-    ft::ft_map<char, std::string>::iterator ft_find_end = ft_map3->end();
+    ft::map<char, std::string>::iterator ft_find_begin = ft_map3->find('e');
+    ft::map<char, std::string>::iterator ft_find_end = ft_map3->end();
 
     while(find_begin != find_end)
     {
@@ -145,8 +145,8 @@ int     main_map()
     std::cout << "######## LOWER_BOUND D ########" << std::endl;
     std::map<char, std::string>::iterator lower_begin = map3->lower_bound('d');
     std::map<char, std::string>::iterator lower_end = map3->end();
-    ft::ft_map<char, std::string>::iterator ft_lower_begin = ft_map3->lower_bound('d');
-    ft::ft_map<char, std::string>::iterator ft_lower_end = ft_map3->end();
+    ft::map<char, std::string>::iterator ft_lower_begin = ft_map3->lower_bound('d');
+    ft::map<char, std::string>::iterator ft_lower_end = ft_map3->end();
 
     while(ft_lower_begin != ft_lower_end || lower_begin != lower_end)
     {
@@ -162,8 +162,8 @@ int     main_map()
     std::cout << "######## UPPER_BOUND D ########" << std::endl;
     std::map<char, std::string>::iterator upper_begin = map3->upper_bound('d');
     std::map<char, std::string>::iterator upper_end = map3->end();
-    ft::ft_map<char, std::string>::iterator ft_upper_begin = ft_map3->upper_bound('d');
-    ft::ft_map<char, std::string>::iterator ft_upper_end = ft_map3->end();
+    ft::map<char, std::string>::iterator ft_upper_begin = ft_map3->upper_bound('d');
+    ft::map<char, std::string>::iterator ft_upper_end = ft_map3->end();
 
     while(ft_upper_begin != ft_upper_end || upper_begin != upper_end)
     {
@@ -193,7 +193,7 @@ int     main_map()
     std::cout << "ft_map3  :: size :: " << ft_map3->size() << std::endl;
 
     std::map<char, std::string> *map2 = new std::map<char, std::string>();
-    ft::ft_map<char, std::string> *ft_map2 = new ft::ft_map<char, std::string>();
+    ft::map<char, std::string> *ft_map2 = new ft::map<char, std::string>();
 
     std::cout << "######## MAP2 = MAP1 ########" << std::endl;
     map2 = map1;
@@ -218,7 +218,7 @@ int     main_map()
     std::cout << "######## CONSTRUCTOR BY ITERATORS ########" << std::endl;
 
     std::map<char, std::string> *map4 = new std::map<char, std::string>(map3->begin(), map3->end());
-    ft::ft_map<char, std::string> *ft_map4 = new ft::ft_map<char, std::string>(ft_map3->begin(), ft_map3->end());
+    ft::map<char, std::string> *ft_map4 = new ft::map<char, std::string>(ft_map3->begin(), ft_map3->end());
 
     std::cout << "######## SIZE ########" << std::endl;
     std::cout << "map3     :: size :: " << map3->size() << std::endl;
@@ -246,7 +246,7 @@ int     main_map()
 
     std::cout << "######## EQUAL_RANGE R ########" << std::endl;
     std::pair<std::map<char, std::string>::iterator, std::map<char, std::string>::iterator> equal_range = map4->equal_range('r');
-    std::pair<ft::ft_map<char, std::string>::iterator, ft::ft_map<char, std::string>::iterator> ft_equal_range = ft_map4->equal_range('r');
+    std::pair<ft::map<char, std::string>::iterator, ft::map<char, std::string>::iterator> ft_equal_range = ft_map4->equal_range('r');
     std::cout << equal_range.first->first << std::endl;
     std::cout << ft_equal_range.first.first << std::endl;
 
@@ -254,7 +254,7 @@ int     main_map()
     std::cout << "######## CONSTRUCTOR BY COPY ########" << std::endl;
 
     std::map<char, std::string> *map5 = new std::map<char, std::string>(*map4);
-    ft::ft_map<char, std::string> *ft_map5 = new ft::ft_map<char, std::string>(*ft_map4);
+    ft::map<char, std::string> *ft_map5 = new ft::map<char, std::string>(*ft_map4);
 
     std::cout << "######## SIZE ########" << std::endl;
     std::cout << "map4     :: size :: " << map4->size() << std::endl;

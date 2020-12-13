@@ -436,7 +436,7 @@ list<T, Alloc> &list<T, Alloc>::operator=(const list &target)
 {
     struct s_elem<T> *temp;
     struct s_elem<T> *prev_temp;
-    typename ft::list<T>::iterator   it = target.begin();
+    typename ft::list<T>::const_iterator   it = target.begin();
 
     while (this->_first != NULL)
     {
@@ -579,10 +579,6 @@ typename Alloc::const_reference list<T, Alloc>::front() const
         T   &ret = *this->_zero;
         return ret;
     }
-    while (this->_first->next != NULL)
-    {
-        this->_first = this->_first->next;
-    }
     T   &ret = this->_first->content;
     return ret;
 }
@@ -590,30 +586,38 @@ typename Alloc::const_reference list<T, Alloc>::front() const
 template < class T, class Alloc >
 typename Alloc::reference list<T, Alloc>::back()
 {
+    struct s_elem<T>    *tmp;
+    tmp = this->_first;
+
     if (this->_first == NULL)
     {
         T   &ret = *this->_zero;
         return ret;
     }
-    while (this->_first->next != NULL)
+    while (tmp->next != NULL)
     {
-        this->_first = this->_first->next;
+        tmp = tmp->next;
     }
-    T   &ret = this->_first->content;
+    T   &ret = tmp->content;
     return ret;
 }
 
 template < class T, class Alloc >
 typename Alloc::const_reference list<T, Alloc>::back() const
 {
-    if (this->_first != NULL)
+    struct s_elem<T>    *tmp;
+    tmp = this->_first;
+
+    if (this->_first == NULL)
     {
-        while (this->_first->next != NULL)
-        {
-            this->_first = this->_first->next;
-        }
+        T   &ret = *this->_zero;
+        return ret;
     }
-    T   &ret = this->_first->content;
+    while (tmp->next != NULL)
+    {
+        tmp = tmp->next;
+    }
+    T   &ret = tmp->content;
     return ret;
 }
 

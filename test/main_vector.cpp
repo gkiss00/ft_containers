@@ -1,4 +1,4 @@
-#include "../ft_vector.hpp"
+#include "../vector.hpp"
 #include <iostream>
 #include <vector>
 
@@ -656,5 +656,27 @@ int     main_vector()
     std::cout << mit7[0] << std::endl;
     std::cout << std::endl;
 
+    std::cout << " --- Cacharle errors --- " << std::endl;
+    int             arr1[5] = {1, 2, 3, 4, 5};
+    std::vector<int> cacharle1(arr1, arr1 + 5);
+    ft::vector<int> moncacharle1(arr1, arr1 + 5);
+    std::vector<int>::reverse_iterator cacharle1_it = cacharle1.rbegin();
+    ft::vector<int>::reverse_iterator moncacharle1_it = moncacharle1.rbegin();
+
+    std::cout << cacharle1_it[0] << std::endl;
+    std::cout << moncacharle1_it[0] << std::endl;
+    std::cout << std::endl;
+    std::cout << cacharle1_it[1] << std::endl;
+    std::cout << moncacharle1_it[1] << std::endl;
+    std::cout << std::endl;
+    std::cout << cacharle1_it[2] << std::endl;
+    std::cout << moncacharle1_it[2] << std::endl;
+    std::cout << std::endl;
+    std::cout << cacharle1_it[3] << std::endl;
+    std::cout << moncacharle1_it[3] << std::endl;
+    std::cout << std::endl;
+    std::cout << cacharle1_it[4] << std::endl;
+    std::cout << moncacharle1_it[4] << std::endl;
+    std::cout << std::endl;
     return 0;
 }
