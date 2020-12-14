@@ -12,22 +12,18 @@ namespace ft {
 template<class T, class Container = ft::deque<T> >
 class stack : public ft::deque<T> {
 
-    protected:
-        ft_node<T> *node;
+    private:
+        ft_node<T> *getNode() const {};
+
     public:
         typedef T value_type;
         typedef unsigned int size_type;
         typedef Container container_type;
         
-        stack();
-        stack(const stack &target);
+        stack(const container_type &target = container_type());
         stack &operator=(const stack &target);
-        ~stack();
 
-        bool empty() const;
-        size_type size() const;
         value_type top();
-        void push(T target);
         void pop();
 
         bool operator==(stack<T> &target);
@@ -44,35 +40,31 @@ class stack : public ft::deque<T> {
 //****************************************
 //****************************************
 
-template<class T, class container_type>
-stack<T, container_type>::stack()
-{
-    this->node = NULL;
-}
+
 
 template<class T, class container_type>
-stack<T, container_type>::stack(const stack &target)
+stack<T, container_type>::stack(const container_type &target)
 {
-    ft_node<T> *tmp;
-    ft_node<T> *node;
+    ft_node<T> *save;
+    ft_node<T> *n;
 
-    tmp = NULL;
-    node = target.node;
+    save = NULL;
+    n = target.getNode();
     for (unsigned int i = 0; i < target.size(); ++i)
     {
         if (i == 0)
         {
-            this->node = new ft_node<T>(node->getElement());
-            tmp = this->node;
+            this->node = new ft_node<T>(n->getElement());
+            save = this->node;
         }
         else
         {
-            this->node->setNext(new ft_node<T>(node->getElement()));
+            this->node->setNext(new ft_node<T>(n->getElement()));
             this->node = this->node->getNext();
         }
-        node = node->getNext();
+        n = n->getNext();
     }
-    this->node = tmp;
+    this->node = save;
 }
 
 template<class T, class container_type>
@@ -91,47 +83,11 @@ stack<T, container_type> &stack<T, container_type>::operator=(const stack &targe
     return (*this);
 }
 
-template<typename T, class container_type>
-stack<T, container_type>::~stack()
-{
-    ft_node<T> *tmp;
-
-    tmp = this->node;
-    while (this->node != NULL)
-    {
-        tmp = this->node;
-        this->node = this->node->getNext();
-        delete(tmp);
-    }
-}
-
 //****************************************
 //****************************************
 //FUNCTIONS
 //****************************************
 //****************************************
-
-template<class T, class container_type>
-bool stack<T, container_type>::empty() const
-{
-    return(this->node == NULL ? (true) : (false));
-}
-
-template<class T, class container_type>
-typename stack<T, container_type>::size_type stack<T, container_type>::size() const
-{
-    unsigned int i;
-    ft_node<T> *tmp;
-
-    i = 0;
-    tmp = this->node;
-    while(tmp != NULL)
-    {
-        ++i;
-        tmp = tmp->getNext();
-    }
-    return (i);
-}
 
 template<class T, class container_type>
 typename stack<T, container_type>::value_type stack<T, container_type>::top()
@@ -151,24 +107,7 @@ typename stack<T, container_type>::value_type stack<T, container_type>::top()
     return (0);
 }
 
-template<class T, class container_type>
-void stack<T, container_type>::push(T target)
-{
-    ft_node<T> *tmp;
-    ft_node<T> *nw;
 
-    nw = new ft_node<T>(target);
-    tmp = this->node;
-    if (tmp == NULL)
-        this->node = nw;
-    else
-    {
-        while(this->node->getNext() != NULL)
-            this->node = this->node->getNext();
-        this->node->setNext(nw);
-        this->node = tmp;
-    }
-}
 
 template<class T, class container_type>
 void stack<T, container_type>::pop()
