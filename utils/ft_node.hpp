@@ -37,14 +37,14 @@ ft_node<T>::ft_node()
 {
     this->element = 0;
     this->parent = NULL;
-    this->next = 0;
+    this->next = NULL;
 }
 template<class T>
 ft_node<T>::ft_node(T elem)
 {
     this->element = elem;
     this->parent = NULL;
-    this->next = 0;
+    this->next = NULL;
 }
 template<class T>
 ft_node<T>::ft_node(const ft_node<T> &target)
