@@ -9,12 +9,14 @@
 namespace ft {
 template<class T, class Container = ft::deque<T> >
 class queue : public ft::deque<T>{
+
+    private:
+        ft_node<T> *getNode() const {};
+
     public:
         typedef T value_type;
         typedef unsigned int size_type;
         typedef Container container_type;
-
-    public:
 
         queue(const container_type &target = container_type());
         queue &operator=(const queue &target );

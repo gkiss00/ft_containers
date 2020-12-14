@@ -400,7 +400,11 @@ int     main_queue()
     std::cout << "queue    :: back :: " << queue1->back() << " " << queue2->back() << std::endl;
     std::cout << "ft_queue :: back :: " << ft_queue1->back() << " " << ft_queue2->back() << std::endl;
 
-    std::cout << "######## BACK queue1 ########" << std::endl;
+    std::cout << "######## FRONT ########" << std::endl;
+    std::cout << "queue    :: front:: " << queue1->front()  << std::endl;
+    std::cout << "ft_queue :: front:: " << ft_queue1->front() << std::endl;
+
+    std::cout << "######## POP QUEUE1 ########" << std::endl;
     queue1->pop();
     ft_queue1->pop();
 
@@ -411,6 +415,10 @@ int     main_queue()
     std::cout << "######## BACK ########" << std::endl;
     std::cout << "queue    :: back :: " << queue1->back() << " " << queue2->back() << std::endl;
     std::cout << "ft_queue :: back :: " << ft_queue1->back() << " " << ft_queue2->back() << std::endl;
+
+    std::cout << "######## FRONT ########" << std::endl;
+    std::cout << "queue    :: front:: " << queue1->front()  << std::endl;
+    std::cout << "ft_queue :: front:: " << ft_queue1->front() << std::endl;
 
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -456,6 +464,10 @@ int     main_queue()
     std::cout << "queue    :: back :: " << queue1->back() << " " << queue_copy->back() << std::endl;
     std::cout << "ft_queue :: back :: " << ft_queue1->back() << " " << ft_queue_copy->back() << std::endl;
 
+    std::cout << "######## FRONT ########" << std::endl;
+    std::cout << "queue    :: front:: " << queue1->front() << " " << queue_copy->front() << std::endl;
+    std::cout << "ft_queue :: front:: " << ft_queue1->front() << " " << ft_queue_copy->front()<< std::endl;
+
     std::cout << "######## POP ########" << std::endl;
     queue1->pop();
     ft_queue1->pop();
@@ -467,6 +479,10 @@ int     main_queue()
     std::cout << "######## BACK ########" << std::endl;
     std::cout << "queue    :: back :: " << queue1->back() << " " << queue_copy->back() << std::endl;
     std::cout << "ft_queue :: back :: " << ft_queue1->back() << " " << ft_queue_copy->back() << std::endl;
+
+    std::cout << "######## FRONT ########" << std::endl;
+    std::cout << "queue    :: front:: " << queue1->front() << " " << queue_copy->front() << std::endl;
+    std::cout << "ft_queue :: front:: " << ft_queue1->front() << " " << ft_queue_copy->front()<< std::endl;
 
     
 
