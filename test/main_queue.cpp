@@ -457,8 +457,8 @@ int     main_queue()
     std::cout << "ft_queue :: back :: " << ft_queue1->back() << " " << ft_queue_copy->back() << std::endl;
 
     std::cout << "######## POP ########" << std::endl;
-    //queue2->pop(); //segfault sometimes
-    ft_queue2->pop(); //sometimes does not do the job
+    queue1->pop();
+    ft_queue1->pop();
 
     std::cout << "######## SIZE ########" << std::endl;
     std::cout << "queue    :: size :: " << queue1->size() << " " << queue_copy->size() << std::endl;

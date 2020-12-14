@@ -2,9 +2,6 @@
 
 dans queue and stack, typedef container_type
 
-/!\/!\/!\ dans queue pop ne pop pas toujours /!\/!\/!\
-/!\/!\/!\ dans le vrai queue pop segfault parfois /!\/!\/!\
-
 dans map, reverse_iterator suis la doc, mais pas le comportement reel
 dans map, find suis la doc, mais pas le comportement reel
 

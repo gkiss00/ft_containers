@@ -8,8 +8,8 @@ int main()
 {
     // main_list();
     // main_map();
-    // main_queue();
-     main_stack();
+     main_queue();
+    // main_stack();
     // main_vector();
     return (0);
 }

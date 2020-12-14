@@ -441,8 +441,8 @@ int     main_stack()
     std::cout << "ft_stack :: top  :: " << ft_stack1->top() << " " << ft_stack_copy->top() << std::endl;
 
     std::cout << "######## POP ########" << std::endl;
-    //stack2->pop(); //segfault sometimes
-    ft_stack2->pop(); //sometimes does not do the job
+    stack1->pop();
+    ft_stack1->pop();
 
     std::cout << "######## TOP ########" << std::endl;
     std::cout << "stack    :: top  :: " << stack1->top() << " " << stack_copy->top() << std::endl;
