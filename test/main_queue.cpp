@@ -27,7 +27,7 @@ int     main_queue()
     std::cout << "\\-_-_-_-_-_-_-_-_-/" << std::endl;
 
     std::cout << std::endl;
-    std::cout << "+-+-+-+-+ ON ENMPTY queue +-+-+-+-+" << std::endl;
+    std::cout << "+-+-+-+-+ ON ENMPTY QUEUE +-+-+-+-+" << std::endl;
     std::cout << std::endl;
 
     std::cout << "######## == ########" << std::endl;
@@ -55,7 +55,7 @@ int     main_queue()
     std::cout << "ft_queue :: >=   :: " << (*ft_queue1 >= *ft_queue2) << std::endl;
 
     std::cout << std::endl;
-    std::cout << "+-+-+-+-+ ON SAME queue WITH SAME LEN +-+-+-+-+" << std::endl;
+    std::cout << "+-+-+-+-+ ON SAME QUEUE WITH SAME LEN +-+-+-+-+" << std::endl;
     std::cout << std::endl;
 
     queue1->push(1);

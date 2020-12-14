@@ -13,19 +13,14 @@ class queue : public ft::deque<T>{
         typedef T value_type;
         typedef unsigned int size_type;
         typedef Container container_type;
-    private:
-        ft_node<T> *node;
-    public:
-        queue();
-        queue(const queue &target);
-        queue &operator=(const queue &target);
-        ~queue();
 
-        bool empty() const;
-        size_type size() const;
+    public:
+
+        queue(const container_type &target = container_type());
+        queue &operator=(const queue &target );
+
         value_type front();
         value_type back();
-        void push(T target);
         void pop();
 
         bool operator==(queue<T> &target);
@@ -43,19 +38,13 @@ class queue : public ft::deque<T>{
 //****************************************
 
 template<class T, class container_type>
-queue<T, container_type>::queue()
-{
-    this->node = NULL;
-}
-
-template<class T, class container_type>
-queue<T, container_type>::queue(const queue &target)
+queue<T, container_type>::queue(const container_type &target)
 {
     ft_node<T> *tmp;
     ft_node<T> *node;
 
     tmp = NULL;
-    node = target.node;
+    node = target.getNode();
     for (unsigned int i = 0; i < target.size(); ++i)
     {
         if (i == 0)
@@ -89,47 +78,11 @@ queue<T, container_type> &queue<T, container_type>::operator=(const queue &targe
     return (*this);
 }
 
-template<typename T, class container_type>
-queue<T, container_type>::~queue()
-{
-    ft_node<T> *tmp;
-
-    tmp = this->node;
-    while (this->node != NULL)
-    {
-        tmp = this->node;
-        this->node = this->node->getNext();
-        delete(tmp);
-    }
-}
-
 //****************************************
 //****************************************
 //FUNCTIONS
 //****************************************
 //****************************************
-
-template<class T, class container_type>
-bool queue<T, container_type>::empty() const
-{
-    return(this->node == NULL ? (true) : (false));
-}
-
-template<class T, class container_type>
-typename queue<T, container_type>::size_type queue<T, container_type>::size() const
-{
-    unsigned int i;
-    ft_node<T> *tmp;
-
-    i = 0;
-    tmp = this->node;
-    while(tmp != NULL)
-    {
-        ++i;
-        tmp = tmp->getNext();
-    }
-    return (i);
-}
 
 template<class T, class container_type>
 typename queue<T, container_type>::value_type queue<T, container_type>::front()
@@ -155,25 +108,6 @@ typename queue<T, container_type>::value_type queue<T, container_type>::back()
     if (ret != NULL)
         return (ret->getElement());
     return (0); 
-}
-
-template<class T, class container_type>
-void queue<T, container_type>::push(T target)
-{
-    ft_node<T> *tmp;
-    ft_node<T> *nw;
-
-    nw = new ft_node<T>(target);
-    tmp = this->node;
-    if (tmp == NULL)
-        this->node = nw;
-    else
-    {
-        while(this->node->getNext() != NULL)
-            this->node = this->node->getNext();
-        this->node->setNext(nw);
-        this->node = tmp;
-    }
 }
 
 template<class T, class container_type>
@@ -203,7 +137,7 @@ bool queue<T, container_type>::operator==(queue<T> &target)
     ft_node<T> *node1;
     ft_node<T> *node2;
 
-    size = this->size() > target.size() ? (this->size()) : (target.size());
+    size = this->size() > target.size() ? (target.size()) : (this->size());
     node1 = this->node;
     node2 = target.node;
     if ((this->size()) != (target.size()))
