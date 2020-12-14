@@ -4,19 +4,21 @@
 
 # include <stdio.h>
 # include <iostream>
+# include "./utils/deque.hpp"
 # include "./utils/ft_node.hpp"
 
 namespace ft {
 
-template<class T>
-class stack {
+template<class T, class Container = ft::deque<T> >
+class stack : public ft::deque<T> {
+
+    protected:
+        ft_node<T> *node;
     public:
         typedef T value_type;
         typedef unsigned int size_type;
-        //typedef Container container_type;
-    private:
-        ft_node<T> *node;
-    public:
+        typedef Container container_type;
+        
         stack();
         stack(const stack &target);
         stack &operator=(const stack &target);
@@ -42,14 +44,14 @@ class stack {
 //****************************************
 //****************************************
 
-template<class T>
-stack<T>::stack()
+template<class T, class container_type>
+stack<T, container_type>::stack()
 {
     this->node = NULL;
 }
 
-template<class T>
-stack<T>::stack(const stack &target)
+template<class T, class container_type>
+stack<T, container_type>::stack(const stack &target)
 {
     ft_node<T> *tmp;
     ft_node<T> *node;
@@ -73,8 +75,8 @@ stack<T>::stack(const stack &target)
     this->node = tmp;
 }
 
-template<class T>
-stack<T> &stack<T>::operator=(const stack &target)
+template<class T, class container_type>
+stack<T, container_type> &stack<T, container_type>::operator=(const stack &target)
 {
     ft_node<T> *tmp;
 
@@ -89,8 +91,8 @@ stack<T> &stack<T>::operator=(const stack &target)
     return (*this);
 }
 
-template<typename T>
-stack<T>::~stack()
+template<typename T, class container_type>
+stack<T, container_type>::~stack()
 {
     ft_node<T> *tmp;
 
@@ -109,14 +111,14 @@ stack<T>::~stack()
 //****************************************
 //****************************************
 
-template<class T>
-bool stack<T>::empty() const
+template<class T, class container_type>
+bool stack<T, container_type>::empty() const
 {
     return(this->node == NULL ? (true) : (false));
 }
 
-template<class T>
-typename stack<T>::size_type stack<T>::size() const
+template<class T, class container_type>
+typename stack<T, container_type>::size_type stack<T, container_type>::size() const
 {
     unsigned int i;
     ft_node<T> *tmp;
@@ -131,8 +133,8 @@ typename stack<T>::size_type stack<T>::size() const
     return (i);
 }
 
-template<class T>
-typename stack<T>::value_type stack<T>::top()
+template<class T, class container_type>
+typename stack<T, container_type>::value_type stack<T, container_type>::top()
 {
     ft_node<T> *tmp;
     ft_node<T> *ret;
@@ -149,8 +151,8 @@ typename stack<T>::value_type stack<T>::top()
     return (0);
 }
 
-template<class T>
-void stack<T>::push(T target)
+template<class T, class container_type>
+void stack<T, container_type>::push(T target)
 {
     ft_node<T> *tmp;
     ft_node<T> *nw;
@@ -168,8 +170,8 @@ void stack<T>::push(T target)
     }
 }
 
-template<class T>
-void stack<T>::pop()
+template<class T, class container_type>
+void stack<T, container_type>::pop()
 {
     ft_node<T> *start;
     ft_node<T> *precedent;
@@ -202,8 +204,8 @@ void stack<T>::pop()
 //****************************************
 //****************************************
 
-template<class T>
-bool stack<T>::operator==(stack<T> &target)
+template<class T, class container_type>
+bool stack<T, container_type>::operator==(stack<T> &target)
 {
     unsigned int size;
     ft_node<T> *node1;
@@ -224,8 +226,8 @@ bool stack<T>::operator==(stack<T> &target)
     return (true);
 }
 
-template<class T>
-bool stack<T>::operator!=(stack<T> &target)
+template<class T, class container_type>
+bool stack<T, container_type>::operator!=(stack<T> &target)
 {
     unsigned int size;
     ft_node<T> *node1;
@@ -246,8 +248,8 @@ bool stack<T>::operator!=(stack<T> &target)
     return (false);
 }
 
-template<class T>
-bool stack<T>::operator<(stack<T> &target)
+template<class T, class container_type>
+bool stack<T, container_type>::operator<(stack<T> &target)
 {
     unsigned int size;
     ft_node<T> *node1;
@@ -268,14 +270,14 @@ bool stack<T>::operator<(stack<T> &target)
     return (false);
 }
 
-template<class T>
-bool stack<T>::operator<=(stack<T> &target)
+template<class T, class container_type>
+bool stack<T, container_type>::operator<=(stack<T> &target)
 {
     return (this->operator<(target) || this->operator==(target));
 }
 
-template<class T>
-bool stack<T>::operator>(stack<T> &target)
+template<class T, class container_type>
+bool stack<T, container_type>::operator>(stack<T> &target)
 {
     unsigned int size;
     ft_node<T> *node1;
@@ -296,8 +298,8 @@ bool stack<T>::operator>(stack<T> &target)
     return (false);
 }
 
-template<class T>
-bool stack<T>::operator>=(stack<T> &target)
+template<class T, class container_type>
+bool stack<T, container_type>::operator>=(stack<T> &target)
 {
     return (this->operator>(target) || this->operator==(target));
 }

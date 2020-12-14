@@ -120,6 +120,10 @@ int     main_stack()
     std::cout << "######## CONSTRUCTOR BY COPY ########" << std::endl;
     std::stack<int> *stack_copy = new std::stack<int>(*stack2);
     ft::stack<int> *ft_stack_copy = new ft::stack<int>(*ft_stack2);
+
+    std::cout << "######## SIZE ########" << std::endl;
+    std::cout << "stack    :: size :: " << stack1->size() << " " << stack_copy->size() << std::endl;
+    std::cout << "ft_stack :: size :: " << ft_stack1->size() << " " << ft_stack_copy->size() << std::endl;
     
     std::cout << "######## TOP ########" << std::endl;
     std::cout << "stack    :: top  :: " << stack2->top() << " " << stack_copy->top() << std::endl;
@@ -133,8 +137,14 @@ int     main_stack()
     std::cout << "stack    :: top  :: " << stack2->top() << " " << stack_copy->top() << std::endl;
     std::cout << "ft_stack :: top  :: " << ft_stack2->top() << " " << ft_stack_copy->top() << std::endl;
 
-    delete(ft_stack_copy);
-    delete(ft_stack1);
+    std::cout << "######## SIZE ########" << std::endl;
+    std::cout << "stack    :: size :: " << stack1->size() << " " << stack_copy->size() << std::endl;
+    std::cout << "ft_stack :: size :: " << ft_stack1->size() << " " << ft_stack_copy->size() << std::endl;
+
     delete(stack1);
+    delete(stack_copy);
+    delete(ft_stack1);
+    delete(ft_stack_copy);
+
     return (0);
 }

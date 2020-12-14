@@ -164,5 +164,6 @@ int     main_queue()
     delete(ft_queue_copy);
     delete(ft_queue1);
     delete(queue1);
+    delete(queue_copy);
     return (0);
 }
