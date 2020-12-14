@@ -247,7 +247,7 @@ bool queue<T, container_type>::operator<(queue<T> &target)
     ft_node<T> *node1;
     ft_node<T> *node2;
 
-    size = this->size() > target.size() ? (this->size()) : (target.size());
+    size = this->size() > target.size() ? (target.size()) : (this->size());
     node1 = this->node;
     node2 = target.node;
     for(unsigned int i = 0; i < size; ++i)
@@ -275,7 +275,7 @@ bool queue<T, container_type>::operator>(queue<T> &target)
     ft_node<T> *node1;
     ft_node<T> *node2;
 
-    size = this->size() > target.size() ? (this->size()) : (target.size());
+    size = this->size() > target.size() ? (target.size()) : (this->size());
     node1 = this->node;
     node2 = target.node;
     for(unsigned int i = 0; i < size; ++i)
