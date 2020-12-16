@@ -359,7 +359,7 @@ typename map<K, V, Compare, Alloc>::size_type map<K, V, Compare, Alloc>::size() 
 template<class K, class V, class Compare, class Alloc>
 typename map<K, V, Compare, Alloc>::size_type map<K, V, Compare, Alloc>::max_size() const
 {
-    return (this->max);
+    return this->alloc.max_size();
 }
 
 //****************************************

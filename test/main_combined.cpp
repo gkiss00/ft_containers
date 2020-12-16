@@ -45,14 +45,14 @@ int     main_combined(){
     std::stack<int, std::vector<int> > *std_stack2 = new std::stack<int, std::vector<int> >(*std_vector1);
     std::queue<int, std::vector<int> > *std_queue2 = new std::queue<int, std::vector<int> >(*std_vector1);
 
-    std::cout << std_stack2->size() << std::endl;
-    std::cout << std_queue2->size() << std::endl;
+    std::cout << "std size::" << std_stack2->size() << std::endl;
+    std::cout << "std size::" << std_queue2->size() << std::endl;
 
     ft::stack<int, ft::vector<int> > *ft_stack2 = new ft::stack<int, ft::vector<int> >(*ft_vector1);
     ft::queue<int, ft::vector<int> > *ft_queue2 = new ft::queue<int, ft::vector<int> >(*ft_vector1);
 
-    std::cout << ft_stack2->size() << std::endl;
-    std::cout << ft_queue2->size() << std::endl;
+    std::cout << "ft size ::" << ft_stack2->size() << std::endl;
+    std::cout << "ft size ::" << ft_queue2->size() << std::endl;
 
     std::cout << std::endl;
     std::cout << "+-+-+-+-+ WITH LIST +-+-+-+-+" << std::endl;
@@ -61,14 +61,14 @@ int     main_combined(){
     std::stack<int, std::list<int> > *std_stack3 = new std::stack<int, std::list<int> >(*std_list1);
     std::queue<int, std::list<int> > *std_queue3 = new std::queue<int, std::list<int> >(*std_list1);
 
-    std::cout << std_stack3->size() << std::endl;
-    std::cout << std_queue3->size() << std::endl;
+    std::cout << "std size::" << std_stack3->size() << std::endl;
+    std::cout << "std size::" << std_queue3->size() << std::endl;
 
     ft::stack<int, ft::list<int> > *ft_stack3 = new ft::stack<int, ft::list<int> >(*ft_list1);
     ft::queue<int, ft::list<int> > *ft_queue3 = new ft::queue<int, ft::list<int> >(*ft_list1);
 
-    std::cout << ft_stack3->size() << std::endl;
-    std::cout << ft_queue3->size() << std::endl;
+    std::cout << "ft size ::" << ft_stack3->size() << std::endl;
+    std::cout << "ft size ::" << ft_queue3->size() << std::endl;
 
     std::cout << std::endl;
     std::cout << "+-+-+-+-+ WITH STACK +-+-+-+-+" << std::endl;
@@ -77,14 +77,14 @@ int     main_combined(){
     std::stack<int, std::stack<int> > *std_stack4 = new std::stack<int, std::stack<int> >(*std_stack1);
     std::queue<int, std::stack<int> > *std_queue4 = new std::queue<int, std::stack<int> >(*std_stack1);
 
-    std::cout << std_stack4->size() << std::endl;
-    std::cout << std_queue4->size() << std::endl;
+    std::cout << "std size::" << std_stack4->size() << std::endl;
+    std::cout << "std size::" << std_queue4->size() << std::endl;
 
     ft::stack<int, ft::stack<int> > *ft_stack4 = new ft::stack<int, ft::stack<int> >(*ft_stack1);
     ft::queue<int, ft::stack<int> > *ft_queue4 = new ft::queue<int, ft::stack<int> >(*ft_stack1);
 
-    std::cout << ft_stack4->size() << std::endl;
-    std::cout << ft_queue4->size() << std::endl;
+    std::cout << "ft size ::" << ft_stack4->size() << std::endl;
+    std::cout << "ft size ::" << ft_queue4->size() << std::endl;
 
     std::cout << std::endl;
     std::cout << "+-+-+-+-+ WITH QUEUE +-+-+-+-+" << std::endl;
@@ -93,14 +93,14 @@ int     main_combined(){
     std::stack<int, std::queue<int> > *std_stack5 = new std::stack<int, std::queue<int> >(*std_queue1);
     std::queue<int, std::queue<int> > *std_queue5 = new std::queue<int, std::queue<int> >(*std_queue1);
 
-    std::cout << std_stack4->size() << std::endl;
-    std::cout << std_queue4->size() << std::endl;
+    std::cout << "std size::" << std_stack5->size() << std::endl;
+    std::cout << "std size::" << std_queue5->size() << std::endl;
 
     ft::stack<int, ft::queue<int> > *ft_stack5 = new ft::stack<int, ft::queue<int> >(*ft_queue1);
     ft::queue<int, ft::queue<int> > *ft_queue5 = new ft::queue<int, ft::queue<int> >(*ft_queue1);
 
-    std::cout << ft_stack4->size() << std::endl;
-    std::cout << ft_queue4->size() << std::endl;
+    std::cout << "ft size ::" << ft_stack5->size() << std::endl;
+    std::cout << "ft size ::" << ft_queue5->size() << std::endl;
 
     
     delete(std_vector1);

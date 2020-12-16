@@ -12,6 +12,6 @@ int main()
     // main_queue();
     // main_stack();
     // main_vector();
-    main_combined();
+    // main_combined();
     return (0);
 }
